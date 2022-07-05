@@ -1,12 +1,21 @@
 import 'rease/jsx'
-import type { ReaseStore } from 'rease'
+import type { TypeReaseStore } from 'rease'
 
 import { createRandomtring } from '.'
+
+const fixFraction = (n: number): number => {
+  const fraction = n.toString().split('.')[1]
+  if (fraction) {
+    const match = fraction.match(/[09]{2,}\d$/)
+    if (match) n = +n.toFixed(match.index! + match[0].length - 1)
+  }
+  return n
+}
 
 let globalId = ''
 
 export const createInput = (
-  label: string, short: string, $value: ReaseStore<number> & number,
+  label: string, short: string, $value: TypeReaseStore<number>,
   fromBase: (n: number) => number,
   toBase: (n: number) => number
 ): void => {
@@ -19,7 +28,7 @@ export const createInput = (
         class="form-control"
         style="padding-top:2rem;"
         placeholder={1}
-        value={(globalId === id && value != null ? value : value = fromBase($value!!)) || 0}
+        value={(globalId === id && value != null ? value : value = fixFraction(fromBase($value!!))) || 0}
         r-on-input={(e: any) => {
           globalId = id
           $value.set(toBase(value = +e.target.value || 0))

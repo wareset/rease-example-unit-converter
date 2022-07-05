@@ -22,995 +22,1873 @@
 <script>
 /* eslint-disable */
 (function () {
-    'use strict';
+  'use strict';
 
-    /* eslint-disable */
-    /*
-    dester builds:
-    __src__/shared/index.ts
-    __src__/utils/is.ts
-    __src__/utils/other.ts
-    __src__/utils/thens.ts
-    __src__/utils/subscribe.ts
-    __src__/attrs.ts
-    __src__/listen.ts
-    __src__/resize.ts
-    __src__/ReaseStore.ts
-    __src__/main.ts
-    __src__/locals.ts
-    __src__/window.ts
-    index.ts
-    */
-    var e = {
-        svg: "http://www.w3.org/2000/svg",
-        math: "http://www.w3.org/1998/Math/MathML"
-    }, r = "undefined" != typeof window, t = {}, n = e => e && e._ && e._.ir === t, s = Array.isArray, o = e => "function" == typeof e, a = e => null != e && o(e.then), i = e => null != e && o(e.subscribe), u = Object, d = u.defineProperty, c = u.getPrototypeOf, v = u.getOwnPropertyDescriptor, p = () => {}, g = () => p, _ = e => e, b = (e, r, t) => {
-        e.then((e => {
-            E(e, r, t);
-        }));
-    }, E = (e, r, t) => {
-        a(e) ? e.then((e => {
-            E(e, r, t);
-        })) : r(e, t);
-    }, m = (e, r, t) => {
-        if (e.length) for (var n = [], s = [ e.length ], o = s[0]; o-- > 0; ) E(e[o], T, [ n, o, s, r, t ]); else r([], t);
-    }, T = (e, r) => {
-        r[0][r[1]] = e, --r[2][0] || r[3](r[0], r[4]);
-    }, y = (e, r, t) => {
-        var n = () => {
-            r = p;
-        }, s = [], o = e.subscribe((e => {
-            if (s.push(e), 1 === s.length) {
-                for (var o = 0; o < s.length; o++) r(s[o], t, n);
-                s.length = 0;
-            }
-        }));
-        return n = () => {
-            o && (r = p, o.unsubscribe ? o.unsubscribe() : o(), o = null);
-        }, r === p && n(), n;
-    }, w = (e, r, t) => {
-        var n = p, s = p, o = () => {
-            r = p, n(), s();
-        };
-        return s = y(e, ((e, a, i) => {
-            s = i, n(), n = L(e, ((e, s, a) => {
-                n = a, r(e, t, o);
-            }));
-        })), o;
-    }, L = (e, r, t) => {
-        if (a(e)) e = R(e); else if (!i(e)) return r(e, t, p), p;
-        return w(e, r, t);
-    }, R = e => ({
-        subscribe: (r, t) => {
-            var n = () => {
-                r = p;
-            };
-            return b(e, (e => {
-                r(e, t, n);
-            })), n;
-        }
-    }), O = (e, r) => ({
-        subscribe: (t, n) => {
-            var s = p, o = p, a = () => {
-                t = p, s(), o();
-            };
-            return o = y(k(e), ((e, i, l) => {
-                o = l, s(), s = L(r(e), ((e, r, o) => {
-                    s = o, t(e, n, a);
-                }));
-            })), a;
-        }
-    }), k = e => ({
-        subscribe: (r, t) => {
-            e = e.slice();
-            for (var n = [], s = {}, o = [ 0 ], a = () => {
-                for (var e in s) s[e]();
-            }, i = e.length, l = 0; l < i; l++) s[l] = L(e[l], A, [ l, i, n, s, o, [ !1 ], r, t, a ]);
-            return a;
-        }
-    }), A = (e, [r, t, n, s, o, a, i, l, h], f) => {
-        n[r] = e, s[r] = f, (o[0] === t || a[0] !== (a[0] = !0) && ++o[0] === t) && i(n.slice(0), l, h);
-    }, M = /^style--/, C = /^class--/, S = e => e, $ = e => {
-        switch (typeof e) {
-          case "string":
-            return e;
+  /* eslint-disable */
+  /*
+  dester builds:
+  __src__/shared/index.ts
+  __src__/utils/is.ts
+  __src__/utils/other.ts
+  __src__/utils/thens.ts
+  __src__/utils/subscribe.ts
+  __src__/attrs.ts
+  __src__/listen.ts
+  __src__/resize.ts
+  __src__/ReaseStore.ts
+  __src__/main.ts
+  __src__/global.ts
+  __src__/window.ts
+  index.ts
+  */
+  /* filename: __src__/shared/index.ts
+    timestamp: 2022-07-05T14:51:12.766Z */
+  // export const ELEMENT_NODE = 1
+  // export const ATTRIBUTE_NODE = 2
+  // export const TEXT_NODE = 3
+  // export const CDATA_SECTION_NODE = 4
+  // export const ENTITY_REFERENCE_NODE = 5
+  // export const ENTITY_NODE = 6
+  // export const PROCESSING_INSTRUCTION_NODE = 7
+  // export const COMMENT_NODE = 8
+  // export const DOCUMENT_NODE = 9
+  // export const DOCUMENT_TYPE_NODE = 10
+  // export const DOCUMENT_FRAGMENT_NODE = 11
+  // export const NOTATION_NODE = 12
+  // export const NULL = [null][0] as null
+  var __uri__ = 'http://www.w3.org/';
+  var NAMESPACES_URI = {
+    // _   : __uri__ + '1999/xhtml',
+    svg: __uri__ + '2000/svg',
+    math: __uri__ + '1998/Math/MathML'
+  }; // export const RULES = {
+  //   sw: 'SWITCH',
+  //   sc: 'CASE',
+  //   sd: 'DEFAULT',
+  //   ke: 'KEY',
+  //   if: 'IF',
+  //   ei: 'ELIF',
+  //   el: 'ELSE',
+  //   fe: 'FOR'
+  // } as const
+  // export const TYPES = {
+  //   m: 'ROOT',
+  //   r: 'RULE',
+  //   t: 'TEXT',
+  //   h: 'COMMENT',
+  //   i: 'INNER',
+  //   s: 'SLOT',
+  //   e: 'ELEMENT',
+  //   f: 'FRAGMENT',
+  //   c: 'COMPONENT'
+  // } as const
 
-          case "object":
-            var r = "", t = "";
-            if (s(e)) for (var n, o = e.length; o-- > 0; ) (n = $(e[o])) && (r += t + n, t = " "); else if (e) for (var a in e) e[a] && (r += t + a, 
-            t = " ");
-            return r;
+  var isBrowser = typeof window !== 'undefined';
+  var IS_REASE_NODE = {};
 
-          default:
-            return "";
-        }
-    }, U = {}, H = e => U[e] || (U[e] = e.replace(/([A-Z])/g, "-$1").toLowerCase()), I = e => {
-        switch (typeof e) {
-          case "string":
-            return e;
+  var isRease = v => v && v._ && v._.ir === IS_REASE_NODE;
 
-          case "object":
-            var r = "";
-            if (s(e)) for (var t, n = 0; n < e.length; n++) (t = I(e[n])) && (r += t + (";" === t[t.length - 1] ? "" : ";")); else if (e) for (var o in e) null != e[o] && (r += H(o) + ":" + e[o] + ";");
-            return r;
+  var isArray = Array.isArray;
 
-          default:
-            return "";
-        }
-    }, F = (e, r, t) => {
-        t ? e.classList.add(r) : e.classList.remove(r);
-    }, P = [ (e, r, t, n) => {
-        if (t ? e.setAttribute(r, t) : e.removeAttribute(r), n._.ac) for (var s in n._.ac) F(e, s, n._.ac[s]);
-        (e => {
-            e.home._is.css && !e.home._is.css[2] && e.node && e.node.classList.add(e.home._is.css[0]);
-        })(n);
-    }, $ ], G = [ (e, r, t, n) => {
-        if (t ? e.setAttribute(r, t) : e.removeAttribute(r), n._.as) for (var s in n._.as) e.style[s] = n._.as[s];
-    }, I ], W = [ (e, r, t, n) => {
-        F(e, r = r.slice(7), n._.ac[r] = t);
-    }, S ], x = [ (e, r, t, n) => {
-        e.style[r = r.slice(7)] = n._.as[r] = t;
-    }, S ], j = [ (e, r, t) => {
-        "_" === r[0] || B(e.localName, r, e).set ? e[r] = t : null == t || "" === t ? e.removeAttribute(r) : e.getAttribute(r) !== t && e.setAttribute(r, t);
-    }, S ], X = (e, r) => "class" === e ? P : "style" === e ? G : C.test(e) ? (r.ac || (r.ac = {}), 
-    W) : M.test(e) ? (r.as || (r.as = {}), x) : j, z = {}, B = (e, r, t) => (z[e] || (z[e] = {}))[r] || (z[e][r] = v(c(t), r) || {}), q = (() => {
-        if (!r) return g;
-        var e = e => {
-            e.preventDefault();
-        }, t = e => {
-            e.stopPropagation();
-        }, n = (e, r) => function(t) {
-            for (var n = 0; n < e.length; n++) e[n].call(this, t, r);
-        }, o = e => function(r) {
-            r.target === this && e.call(this, r);
-        }, a = e => function(r) {
-            r.isTrusted && e.call(this, r);
-        }, i = (e, r, t) => function(n) {
-            ((e, r) => {
-                var t = r;
-                for (var n in h) {
-                    if (!(h[n][0] in e) && !(h[n][1] in e)) break;
-                    t--;
-                }
-                return !t;
-            })(r, t) && e.call(this, n);
-        }, l = [], h = {}, f = () => {
-            f = p, document.addEventListener("keyup", (e => {
-                delete h[e.code + e.key];
-            }), !1), document.addEventListener("keydown", (e => {
-                h[e.code + e.key] = [ e.code, e.key ];
-                for (var r = 0; r < l.length; r++) l[r][0].length ? l[r][1].call(document.body, e) : l.splice(r--, 1);
-            }), !1);
-        };
-        return (r, h, u, d) => {
-            for (var c, v, p = s(u) ? u.slice() : [ u ], g = n(p, d), _ = {}, b = 0, E = () => {
-                p.length = 0, c && r.removeEventListener(c, g, w);
-            }, m = !1, N = !1, T = h.split(/[^a-z\d]+/i), y = T.length; y--; ) if (v = T[y]) switch (v) {
-              case "once":
-                p.push(E);
-                break;
+  var isObject = v => v != null && typeof v === 'object';
 
-              case "passive":
-                m = !0;
-                break;
+  var isFunction = v => typeof v === 'function';
 
-              case "capture":
-                N = !0;
-                break;
+  var isEqual = (a, b) => a === a ? a === b : b !== b;
 
-              case "self":
-                g = o(g);
-                break;
+  var isThenable = v => v != null && isFunction(v.then);
 
-              case "trusted":
-                g = a(g);
-                break;
+  var isStorable = v => v != null && isFunction(v.subscribe); // Почти все пропсы будут сторабле из-за !!. Поэтому не нужно
+  /* filename: __src__/utils/other.ts
+    timestamp: 2022-07-05T14:51:12.971Z */
+  // import { isFunction, isThenable } from '..'
+  // import { then } from '..'
+  // import { TYPES, NAMESPACES_URI } from '..'
 
-              case "stop":
-                p.unshift(t);
-                break;
 
-              case "prevent":
-                p.unshift(e);
-                break;
+  var __Object__ = Object;
+  var defineProperty = __Object__.defineProperty;
+  var getPrototypeOf = __Object__.getPrototypeOf;
+  var getOwnPropertyDescriptor = __Object__.getOwnPropertyDescriptor;
 
-              default:
-                1 === v.length || /[A-Z]/.test(v[0]) ? v in _ || (_[v] = !0, b++) : y || (c = v);
-            }
-            var w = {
-                passive: m,
-                capture: N
-            };
-            return b && (f(), g = i(g, _, b)), c ? r.addEventListener(c = T[0], g, w) : l.push([ p, g ]), 
-            E;
-        };
-    })(), Z = (e, r) => t => q(t.node, e, r, t), K = (e, r) => {
-        return !((e, r) => e == e ? e === r : r != r)(e, r) || null != (t = r) && "object" == typeof t || o(r);
-        var t;
-    }, Q = (e, r, t) => {
-        e._value = r;
-        var n = e._;
-        n.break = !0;
-        var s = n.items, o = n.queue;
-        if (o.push({
-            f: t,
-            n: r
-        }), 1 === o.length) {
-            for (var a, i = 0; i < o.length; i++) if ((a = o[i].f) || i > o.length - 2) {
-                n.break = !1;
-                for (var l = o[i], h = 0; h < s.length; h++) if ((a || K(s[h].o, l.n)) && s[h].s(e._value = s[h].o = l.n), 
-                !a && n.break) {
-                    s[h].o = e._value;
-                    break;
-                }
-            }
-            o.length = 0;
-        }
-        return e;
+  var noop = () => {};
+
+  var noopNoop = () => noop;
+
+  var noop0 = v => v; // export const callFnOrThenFn = (v: any, ctx?: any): void => {
+  //   isFunction(v) ? v(ctx) : isThenable(v) && then(v, callFnOrThenFn, ctx)
+  // }
+  // export const startsWith = (
+  //   string: string,
+  //   search: string,
+  //   offset: number
+  // ): boolean =>
+  //   search === string.slice(offset, offset + search.length)
+  // export const TAGS = {
+  //   s: 'slot',
+  //   f: 'fragment'
+  // } as const
+  // export const getType = (tag: any): '' | typeof TYPES.c | typeof TYPES.s | typeof TYPES.f | typeof TYPES.e =>
+  //   isFunction(tag) && (tag as any).cid ? TYPES.c
+  //     : tag === TAGS.f ? TYPES.f : tag === TAGS.s ? TYPES.s
+  //       : !tag || !isString(tag) ? '' : TYPES.e
+  // export const getNamespaceURI = (tagName: string, namespaceURI: string): string =>
+  //   tagName in NAMESPACES_URI ? (NAMESPACES_URI as any)[tagName]
+  //     : namespaceURI || NAMESPACES_URI.h
+  // type Awaited<T> = T extends PromiseLike<infer R> ? R : T;
+  // type TypeAwaitedList<T> = Promise<{ -readonly [P in keyof T]: Awaited<T[P]> }>
+  // const throwler = (v: any): never => { throw v }
+
+
+  var then = (v, cb, ctx) => {
+    v.then(v => {
+      thenSafe(v, cb, ctx);
+    }); // 'catch' in v && (v as any).catch(throwler)
+  };
+
+  var thenSafe = (v, cb, ctx) => {
+    isThenable(v) ? v.then(v => {
+      thenSafe(v, cb, ctx);
+    }) : cb(v, ctx);
+  };
+
+  var thenSafeAll = (a, cb, ctx) => {
+    if (!a.length) cb([], ctx);else {
+      var vals = [],
+          cnt = [a.length];
+
+      for (var i = cnt[0]; i-- > 0;) {
+        thenSafe(a[i], __thenSeveral_1, [vals, i, cnt, cb, ctx]);
+      }
+    }
+  };
+
+  var __thenSeveral_1 = (v, iam) => {
+    iam[0][iam[1]] = v;
+    --iam[2][0] || iam[3](iam[0], iam[4]);
+  }; // thenStrict(Promise.resolve(12), (v, c) => console.log(v, c), true)
+  // thenStrict({ then: (v: (p: string) => any): any => { console.log(v) } }, (v, c) => console.log(v, c), true)
+  // thenSafely(Promise.resolve(12), (v, c) => console.log(v, c), true)
+  // thenSafelyArray([12], (v, c) => console.log(v, c))
+  // thenSafelyArray([12], (v, c) => console.log(v, c), 12)
+  // thenSafelyArray([12], (v, c) => console.log(v, c.t++), { t: 2 })
+  // thenSafelyArray([12], (v, c) => console.log(v, c[0]++), [12, ''])
+  // thenSafelyArray([12, true, Promise.resolve('')], (v, c) => console.log(v, c[0]++), [12, ''])
+  // import { isReaseStore } from '..'
+  // import {
+  //   TypeReaseContext,
+  //   isRease, context, onDestroy
+  // } from '..'
+
+
+  var subscribe = ($store, cb, ctx) => {
+    // if (isReaseStore($store)) return $store.subscribe(cb as any, ctx)
+    var r = () => {
+      cb = noop;
     };
 
-    class ReaseStore {
-        constructor(e, r, t) {
-            this._ = {
-                items: [],
-                queue: [],
-                proxy: t || (t = _),
-                onRun: r || p,
-                onEnd: p,
-                break: !1
-            }, this._value = t(e, this);
-        }
-        get on() {
-            return this._.items.length > 0;
-        }
-        get value() {
-            return this._value;
-        }
-        get() {
-            return this._value;
-        }
-        set(e) {
-            return K(this._value, e = this._.proxy(e, this)) ? Q(this, e, !1) : this;
-        }
-        next(e) {
-            return Q(this, this._.proxy(e, this), !0);
-        }
-        clear() {
-            for (var e = this._.items, r = e.length; r-- > 0; ) e[r].u();
-            return this;
-        }
-        subscribe(e, r) {
-            var t = {
-                s: n => {
-                    e(n, r, t.u);
-                },
-                u: () => {
-                    if (t.s !== p) {
-                        for (var e = s.length; e-- > 0; ) if (s[e].s === t.s) {
-                            s.splice(e, 1);
-                            break;
-                        }
-                        t.s = t.u = p, s.length || n.onEnd(this);
-                    }
-                },
-                o: {}
-            }, n = this._, s = n.items;
-            return s.length || (n.onEnd = n.onRun(this) || p), s.push(t), n.queue.length || t.s(t.o = this._value), 
-            t.u;
-        }
-    }
+    var values = [];
+    var u = $store.subscribe(v => {
+      values.push(v);
 
-    var V = ReaseStore.prototype;
+      if (values.length === 1) {
+        for (var i = 0; i < values.length; i++) {
+          cb(values[i], ctx, r);
+        }
 
-    d(V, "$", {
-        get: V.get,
-        set: V.set
+        values.length = 0;
+      }
     });
 
-    for (var Y = function(e, r) {
-        d(V, e[r], {
-            value: function() {
-                var t = this.get();
-                return t = null != t && t[e[r]] ? t[e[r]](arguments) : t, r ? t + "" : t;
-            }
-        });
-    }, ee = [ "valueOf", "toString", "toJSON" ], re = 3; re-- > 0; ) Y(ee, re);
-
-    var te, ne, se, ae = (e, r, t) => new ReaseStore(e, r, t), ie = O, le = {
-        ROOT: "ROOT",
-        COMPONENT: "COMPONENT",
-        ELEMENT: "ELEMENT",
-        FRAGMENT: "FRAGMENT",
-        SLOT: "SLOT",
-        TEXT: "TEXT",
-        EXPRESSION: "EXPRESSION",
-        COMMENT: "COMMENT",
-        HTML: "HTML",
-        RULE: {
-            TAG: "RULE_TAG",
-            IF: "RULE_IF",
-            ELIF: "RULE_ELIF",
-            ELSE: "RULE_ELSE",
-            WATCH: "RULE_WATCH",
-            AWAIT: "RULE_AWAIT",
-            THEN: "RULE_THEN",
-            FOR: "RULE_FOR"
-        }
-    }, fe = e => {
-        se = e, te = e.high, ne = e.home;
-    }, ue = e => {
-        se = e.parent;
-    }, de = () => {
-        se = null;
+    r = () => {
+      if (u) cb = noop, u.unsubscribe ? u.unsubscribe() : u(), u = null;
     };
 
-    function ve(e) {
-        var r = n(this) ? this : se;
-        if (!n(r)) throw e;
-        r.on ? (r._.od || (r._.od = [])).push(e) : e(r);
+    if (cb === noop) r();
+    return r;
+  };
+
+  var __subscribeSafeStrict = ($store$, cb, ctx) => {
+    var u1 = noop,
+        u0 = noop;
+
+    var u = () => {
+      cb = noop, u1(), u0();
+    };
+
+    u0 = subscribe($store$, (v, _c, _u0) => {
+      u0 = _u0, u1(), u1 = subscribeSafe(v, (v, _c, _u1) => {
+        u1 = _u1, cb(v, ctx, u);
+      });
+    });
+    return u;
+  };
+
+  var subscribeSafe = ($store$, cb, ctx) => {
+    if (isThenable($store$)) $store$ = storablefyThenable($store$);else if (!isStorable($store$)) return cb($store$, ctx, noop), noop;
+    return __subscribeSafeStrict($store$, cb, ctx);
+  };
+
+  var storablefyThenable = promise => ({
+    subscribe: (cb, ctx) => {
+      var uns = () => {
+        cb = noop;
+      };
+
+      then(promise, v => {
+        cb(v, ctx, uns);
+      });
+      return uns;
+    }
+  }); // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
+
+  var storablefySafeAllWithProxy = ($stores$, proxy) => ({
+    subscribe: (cb, ctx) => {
+      var u1 = noop,
+          u0 = noop;
+
+      var u = () => {
+        cb = noop, u1(), u0();
+      };
+
+      u0 = subscribe(storablefySafeAll($stores$), (v, _c, _u0) => {
+        u0 = _u0;
+        u1(), u1 = subscribeSafe(proxy(v), (v, _c, _u1) => {
+          u1 = _u1, cb(v, ctx, u);
+        });
+      });
+      return u;
+    }
+  }); // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
+
+  var storablefySafeAll = $stores$ => ({
+    subscribe: (cb, ctx) => {
+      // @ts-ignore
+      $stores$ = $stores$.slice();
+      var values = [],
+          unsubs = {};
+      var isStarted = [0];
+
+      var unsub = () => {
+        for (var k in unsubs) {
+          unsubs[k]();
+        }
+      };
+
+      for (var l = $stores$.length, i = 0; i < l; i++) {
+        unsubs[i] = subscribeSafe($stores$[i], __createStorableFromSeverals_1, [i, l, values, unsubs, isStarted, [false], cb, ctx, unsub]);
+      }
+
+      return unsub;
+    }
+  });
+
+  var __createStorableFromSeverals_1 = (v, [i, l, values, unsubs, isStarted, isStartedCurrent, cb, ctx, unsub], u) => {
+    values[i] = v, unsubs[i] = u;
+
+    if (isStarted[0] === l || isStartedCurrent[0] !== (isStartedCurrent[0] = true) && ++isStarted[0] === l) {
+      cb(values.slice(0), ctx, unsub);
+    }
+  }; // import { ReaseStore } from '.'
+  // const store = new ReaseStore(12)
+  // store.subscribe((a, b, c) => {
+  //   console.log(a, b, c)
+  // }, [12, ''])
+  // subscribeStrict(store, (v, c, u) => console.log(v, c, u))
+  // subscribeStrict(store, (v, c, u) => console.log(v, c, u), 12)
+  // subscribeStrict(store, (v, c) => console.log(v, c.t++), { t: 2 })
+  // subscribeStrict(store, (v, c) => console.log(v, c[0]++), [12, ''])
+  // subscribeSafely(12, (v, c, u) => console.log(v, c, u))
+  // subscribeSafely(23, (v, c, u) => console.log(v, c, u), 12)
+  // subscribeSafely(store, (v, c) => console.log(v, c.t++), { t: 2 })
+  // subscribeSafely(store, (v, c) => console.log(v, c[0]++), [12, ''])
+  // const aaa = [12, store, '', Promise.resolve(true)] as const
+  // const q = createStorableFromAnyArray(aaa)
+  // console.log(q)
+  // subscribeSafely(createStorableFromAnyArray(aaa), (v, c) => console.log(v, c[0]++), [12, ''])
+  // const q2 = createStorableFromAnyArrayWithProxy(aaa, (v) => (console.log(v), 12))
+  // console.log(q2)
+
+
+  var REG_STYLE = /^style--/;
+  var REG_CLASS = /^class--/;
+
+  var __setClassId = ctx => {
+    if (ctx.home._is.css && !ctx.home._is.css[2] && ctx.node) {
+      ctx.node.classList.add(ctx.home._is.css[0]);
+    }
+  };
+
+  var baseParser = v => v;
+
+  var classParser = v => {
+    switch (typeof v) {
+      case 'string':
+        return v;
+
+      case 'object':
+        {
+          var res = '',
+              sep = '';
+
+          if (isArray(v)) {
+            for (var c, i = v.length; i-- > 0;) {
+              if (c = classParser(v[i])) res += sep + c, sep = ' ';
+            }
+          } else if (v) {
+            // @ts-ignore
+            for (var k in v) {
+              if (v[k]) res += sep + k, sep = ' ';
+            }
+          }
+
+          return res;
+        }
+
+      default:
+        return '';
+    }
+  };
+
+  var __CASHE_C2D__ = {};
+
+  var __camel2dash__ = v => __CASHE_C2D__[v] || (__CASHE_C2D__[v] = v.replace(/([A-Z])/g, '-$1').toLowerCase());
+
+  var styleParser = v => {
+    switch (typeof v) {
+      case 'string':
+        return v;
+
+      case 'object':
+        {
+          var res = '';
+
+          if (isArray(v)) {
+            for (var c, i = 0; i < v.length; i++) {
+              if (c = styleParser(v[i])) res += c + (c[c.length - 1] === ';' ? '' : ';');
+            }
+          } else if (v) {
+            for (var k in v) {
+              // @ts-ignore
+              if (v[k] != null) res += __camel2dash__(k) + ':' + v[k] + ';';
+            }
+          }
+
+          return res;
+        }
+
+      default:
+        return '';
+    }
+  };
+
+  var __classAddOrRemove = (E, className, is) => {
+    is ? E.classList.add(className) : E.classList.remove(className);
+  };
+
+  var __setClass = (E, k, v, ctx) => {
+    v ? E.setAttribute(k, v) : E.removeAttribute(k);
+    if (ctx._.ac) for (var _k in ctx._.ac) {
+      __classAddOrRemove(E, _k, ctx._.ac[_k]);
     }
 
-    var pe, be = e => {
-        if (e._.esu) for (var r, t = e._.esu; t.length; ) (r = t.pop()) && o(r = r.destroy || r) && (fe(e), 
-        r(e));
-    }, Ee = {
-        3: [],
-        8: []
-    }, me = /^(?:input|style|script)$/i, Ne = (e, r) => {
-        var t = e.nodeType;
-        if (3 === t || 8 === t) Ee[t].length < r && Ee[t].push(e); else if (1 === t && !me.test(e.localName) && ((t = e.localName + e.namespaceURI) in Ee || (Ee[t] = []), 
-        Ee[t].length < r)) {
-            for (var n = e.childNodes, s = n.length; s-- > 0; ) e.removeChild(n[s]);
-            e.value && (e.value = null), e.type && (e.type = null), Ee[t].push(e);
+    __setClassId(ctx);
+  };
+
+  var __setStyle = (E, k, v, ctx) => {
+    v ? E.setAttribute(k, v) : E.removeAttribute(k);
+    if (ctx._.as) for (var _k2 in ctx._.as) {
+      E.style[_k2] = ctx._.as[_k2];
+    }
+  };
+
+  var __setClassAdvanced = (E, k, v, ctx) => {
+    __classAddOrRemove(E, k = k.slice(7), ctx._.ac[k] = v);
+  };
+
+  var __setStyleAdvanced = (E, k, v, ctx) => {
+    E.style[k = k.slice(7)] = ctx._.as[k] = v;
+  };
+
+  var __setDefaultAttribute = (E, k, v) => {
+    if (k[0] === '_' || __dsaGetDescriptor_1(E.localName, k, E).set) E[k] = v;else if (v == null || v === '') E.removeAttribute(k);else if (E.getAttribute(k) !== v) E.setAttribute(k, v);
+  };
+
+  var CLASS_FNS = [__setClass, classParser];
+  var STYLE_FNS = [__setStyle, styleParser];
+  var CLASS_FNS_ADV = [__setClassAdvanced, baseParser];
+  var STYLE_FNS_ADV = [__setStyleAdvanced, baseParser];
+  var DEFAULT_FNS = [__setDefaultAttribute, baseParser]; // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
+  var getAttributeTypeFns = (k, _) => k === 'class' ? CLASS_FNS : k === 'style' ? STYLE_FNS : REG_CLASS.test(k) ? (_.ac || (_.ac = {}), CLASS_FNS_ADV) : REG_STYLE.test(k) ? (_.as || (_.as = {}), STYLE_FNS_ADV) : DEFAULT_FNS; // BEGIN SET_ATTRIBUTE
+
+
+  var __DSA_2 = {};
+
+  var __dsaGetDescriptor_1 = (localName, k, E) => (__DSA_2[localName] || (__DSA_2[localName] = {}))[k] || (__DSA_2[localName][k] = getOwnPropertyDescriptor(getPrototypeOf(E), k) || {}); // END SET_ATTRIBUTE
+
+  /* filename: __src__/listen.ts
+    timestamp: 2022-07-05T14:51:13.711Z */
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
+
+  var listen = (() => {
+    if (!isBrowser) return noopNoop;
+
+    var preventDefault = e => {
+      e.preventDefault();
+    };
+
+    var stopPropagation = e => {
+      e.stopPropagation();
+    };
+
+    var wrap_base = (fns, ctx) => function (e) {
+      for (var i = 0; i < fns.length; i++) {
+        fns[i].call(this, e, ctx);
+      }
+    };
+
+    var wrap_self = fn => function (e) {
+      e.target === this && fn.call(this, e);
+    };
+
+    var wrap_trusted = fn => function (e) {
+      e.isTrusted && fn.call(this, e);
+    };
+
+    var pressedKeysIsEqual = (keypad, keypadLen) => {
+      var n = keypadLen;
+
+      for (var k in PRESSED_KEYS) {
+        if (PRESSED_KEYS[k][0] in keypad || PRESSED_KEYS[k][1] in keypad) n--;else break;
+      }
+
+      return !n;
+    };
+
+    var wrap_keys = (fn, keypad, keypadLen) => function (e) {
+      pressedKeysIsEqual(keypad, keypadLen) && fn.call(this, e);
+    };
+
+    var KEYPADS_LIST = [];
+    var PRESSED_KEYS = {};
+
+    var runKeypad = () => {
+      runKeypad = noop;
+      document.addEventListener('keyup', e => {
+        delete PRESSED_KEYS[e.code + e.key];
+      }, false);
+      document.addEventListener('keydown', e => {
+        PRESSED_KEYS[e.code + e.key] = [e.code, e.key];
+
+        for (var i = 0; i < KEYPADS_LIST.length; i++) {
+          if (!KEYPADS_LIST[i][0].length) KEYPADS_LIST.splice(i--, 1);else KEYPADS_LIST[i][1].call(document.body, e);
         }
-    }, Te = e => {
-        if (e._.od) for (;e._.od.length; ) e._.od.pop()(e);
-    }, ye = e => {
-        if (e && e.on) {
-            e.on = !1, be(e), Te(e), ke(e), e._.ods && e._.ods();
-            var r = e.node;
-            r && r.parentNode && r.parentNode.removeChild(r), we(e), r && Ne(r, 25), e._.$ && (e._.$ = 1, 
-            He(e));
-        }
-    }, we = e => {
-        for (;e.children.length; ) ye(e.children.pop());
-    }, Re = e => r => {
-        if (r.root.node) for (var t, n, s = r; ;) if (t = (s = s.parent).node) {
-            1 === t.nodeType ? (e(r, t), t.appendChild(r.node)) : (e(r, t = (n = t).parentNode), 
-            t.insertBefore(r.node, n));
-            break;
-        }
-    }, Oe = e => {
-        var r, t, n, s = e.attrs;
-        for (var o in e.props) if (t = s[o] = {
-            is: null,
-            _is: r = e.props[o],
-            high: e.high,
-            _: {
-                $: 0,
-                u: p
-            }
-        }, i(r) || a(r) && (r = R(r), 1)) {
-            if (Ue(t), t._.u = w(r, ((e, [r, t, n, s], o) => {
-                t._.u = o, r.on ? t.is !== (t.is = e = s[1](e)) && r.node && s[0](r.node, n, e, r) : o(), 
-                He(t);
-            }), [ e, t, o, X(o, e._) ]), !e.on) {
-                t._.u();
+      }, false);
+    }; // const addEventListener = (
+    //   target: any, type: string, listener: any, options: any
+    // ): void => {
+    //   target.addEventListener(type, listener, options)
+    // }
+    // const removeEventListener = (
+    //   target: any, type: string, listener: any, options: any
+    // ): void => {
+    //   target.removeEventListener(type, listener, options)
+    // }
+    // const REG_SYNTHETIC_EVENTS =
+    //   /^(start|move|end|tap|dbltap|pan|press|repeat)(\d*)$/
+    // const EVENT_START = 'start', EVENT_MOVE = 'move', EVENT_END = 'end'
+    // const EVENT_CLICK = 'click', EVENT_DBLCLICK = 'dblclick'
+    // const EVENT_PAN = 'pan', EVENT_PRESS = 'press', EVENT_REPEAT = 'repeat'
+    // const EVENTS_FOR_RESET = ['click', 'dblclick']
+    // const PASSIVE_FALSE = { passive: false } as const
+    // const setGlobalPreventDefault = (el: any): void => {
+    //   for (let i = EVENTS_FOR_RESET.length; i-- > 0;) {
+    //     addEventListener(el, EVENTS_FOR_RESET[i], preventDefault, PASSIVE_FALSE)
+    //   }
+    // }
+    // const delGlobalPreventDefault = (el: any): void => {
+    //   for (let i = EVENTS_FOR_RESET.length; i-- > 0;) {
+    //     removeEventListener(el, EVENTS_FOR_RESET[i], preventDefault, PASSIVE_FALSE)
+    //   }
+    // }
+    // const createSyntheticEvent = (
+    //   matches: RegExpMatchArray, E: any, fns: any[], cb: any
+    // ): void => {
+    //   console.log(E, fns, cb)
+    //   const type = matches[1]
+    //   const time = matches[2].length > 1 ? +matches[2] : +matches[2] * 1000 || 250
+    //   console.log(type, time)
+    // }
+    // let runSyntheticEvents = (): void => {
+    //   runSyntheticEvents = noop
+    //   let obj: any
+    //   if ('onpointermove' in document) {
+    //     obj = {
+    //       pointerdown  : (e: any): void => { update(e, EVENT_START, true) },
+    //       pointermove  : (e: any): void => { update(e, EVENT_MOVE, true) },
+    //       pointerup    : (e: any): void => { update(e, EVENT_END, true) },
+    //       pointercancel: (e: any): void => { update(e, EVENT_END, true) },
+    //     }
+    //   } else {
+    //     // For bug in dev tools
+    //     let __type__ = 0
+    //     const mouseWrapper = (e: any, type: any): void => {
+    //       ++__type__ >= (__type__ = 1) && update(e, type, true)
+    //     }
+    //     const touchWrapper = (e: any, type: any): void => {
+    //       --__type__ <= (__type__ = -1) && update(e, type, false)
+    //     }
+    //     obj = {
+    //       mousedown  : (e: any): void => { mouseWrapper(e, EVENT_START) },
+    //       mousemove  : (e: any): void => { mouseWrapper(e, EVENT_MOVE) },
+    //       mouseup    : (e: any): void => { mouseWrapper(e, EVENT_END) },
+    //       touchstart : (e: any): void => { touchWrapper(e, EVENT_START) },
+    //       touchmove  : (e: any): void => { touchWrapper(e, EVENT_MOVE) },
+    //       touchend   : (e: any): void => { touchWrapper(e, EVENT_END) },
+    //       touchcancel: (e: any): void => { touchWrapper(e, EVENT_END) },
+    //     }
+    //   }
+    //   for (const event in obj) {
+    //     addEventListener(document, event, obj[event], false)
+    //     // EVENTS_FOR_RESET.push(event)
+    //   }
+    // }
+
+
+    return (E, event, listener, ctx) => {
+      var fns = isArray(listener) ? listener.slice() : [listener];
+      var type;
+      var cb = wrap_base(fns, ctx);
+      var keypad = {};
+      var keypadLen = 0;
+
+      var unsub = () => {
+        fns.length = 0, type && E.removeEventListener(type, cb, options);
+      };
+
+      var passive = false,
+          capture = false;
+      var a = event.split(/[^a-z\d]+/i);
+
+      for (var s, i = a.length; i--;) {
+        if (s = a[i]) {
+          switch (s) {
+            case 'once':
+              {
+                fns.push(unsub);
                 break;
-            }
-        } else n = X(o, e._), t.is = r = n[1](r), e.node && n[0](e.node, o, r, e);
-    }, ke = e => {
-        var r = e.attrs;
-        if (r) {
-            e.attrs = null;
-            var t = e.node;
-            for (var n in r) t && (t.hasAttribute(n) ? t.removeAttribute(n) : n in t && (t[n] = null)), 
-            r[n]._.u(), He(r[n]);
-        }
-    }, Ae = (pe = Re(((r, t) => {
-        var n = e[r.is] || t.namespaceURI, s = r.is + n, o = s in Ee && Ee[s].pop();
-        if (o) for (var a = o.attributes, i = a.length; i-- > 0; ) o.removeAttribute(a[i].name); else o = document.createElementNS(n, r.is);
-        r.node = o, (e => {
-            if (e.use) for (var r = e._.esu || (e._.esu = []), t = 0; t < e.use.length; t++) if (fe(e), 
-            r.push(e.use[t](e)), !e.on) {
-                be(e);
-                break;
-            }
-        })(r), Oe(r), fe(r);
-    })), e => {
-        e.attrs = {}, pe(e), e.node || Oe(e);
-    }), Ce = Re((e => {
-        Ee[3].length ? (e.node = Ee[3].pop()).data = e.is : e.node = document.createTextNode(e.is);
-    })), $e = (e, r, n, s, o, a) => se = se.children[se.children.push({
-        type: e,
-        name: a,
-        is: n,
-        _is: r,
-        node: null,
-        props: s,
-        use: o,
-        root: se.root,
-        home: ne,
-        high: te,
-        parent: se,
-        children: [],
-        slots: null,
-        attrs: null,
-        on: se.on,
-        pub: {},
-        _: {
-            ir: t,
-            $: 0
-        }
-    }) - 1], Ue = e => {
-        e.high._.$++, e._.$++;
-    }, He = e => {
-        if (e && e._.$ > 0) if (e._.$--, e.type !== le.COMPONENT && e.type !== le.ROOT) He(e.high); else if (0 === e._.$) {
-            e._.$ = NaN;
-            var r = e._.oc;
-            if (r) {
-                for (var t = [], n = 0; n < r.length && (fe(e), t.push(r[n](e)), e.on); n++) ;
-                de(), m(t, ((e, r) => {
-                    if (r.on) {
-                        for (var t = e.length; t--; ) o(e[t]) && ve(e[t]);
-                        He(r.high);
-                    } else for (var n = e.length; n--; ) o(e[n]) && (fe(r), e[n](r));
-                    de();
-                }), e);
-            } else He(e.high);
-        }
-    }, Fe = e => {
-        se.on && void 0 !== e && "" !== e && (Ce($e(le.TEXT, e, "" + e)), ue(se));
-    }, De = (e, r) => {
-        r && !(r[0] in e.page.css) && (e.page.css[r[0]] = "", e._.$++, e._.od.push(L(r[1], ((e, [r, t, n, s, o], a) => {
-            if (r.on) {
-                if (s[0] !== (s[0] = e) && (n || (e = e.replace(/(\.[^\s>+,~{}();'"`]+)(?=[^{}();'"`]*{)/g, "$1." + t)), 
-                r.page.css[t] = e, r.node)) {
-                    var i = o[0] || (o[0] = document.getElementById(t) || (e => {
-                        var r = document.createElement("style");
-                        return r.id = e, document.head.appendChild(r), r;
-                    })(t));
-                    i.textContent = e;
-                }
-            } else a();
-            He(r);
-        }), [ e, r[0], r[2], [ "" ], [ null ] ])));
-    }, Je = e => {
-        var r = se;
-        r.slots = e, Ue(r), te = ne = r, r.is.call(r, r.props), He(r), te = r.high, ne = r.home, 
-        ue(r);
-    }, Ke = (e, r, t) => se.on ? ($e(le.COMPONENT, e, e, r || {}, t, e.name), De(se.root, e.css), 
-    Je) : p, Qe = () => {
-        var e = se;
-        (e => {
-            if (e._.esu) for (var r, t = e._.esu, n = 0; n < t.length; n++) if ((r = t[n]) && o(r = r.created) && (fe(e), 
-            r(e), !e.on)) {
-                be(e);
-                break;
-            }
-        })(e), ue(e);
-    }, Ve = (e, r, t) => se.on ? (Ae($e(le.ELEMENT, e, e, r || {}, t)), Qe) : p, br = e => {
-        if (e.parentNode && e.parentNode.removeChild(e), e.childNodes) for (var r = e.childNodes, t = r.length; t-- > 0; ) br(r[t]);
-        Ne(e, 999);
-    }, Er = (e, [r, t, n, s, o]) => {
-        var a = se, i = te, l = ne;
-        if (o && r.node) for (var h, f = r.node.childNodes, u = f.length; u-- > 0; ) "script" !== (h = f[u]).localName && "style" !== h.localName && br(h);
-        te = ne = se = r, r._.$++, Ke(t, n, s)((ve((e => {
-            e.root.node = null, ye(e.root);
-        })), [])), He(r), se = a, te = i, ne = l;
-    }, mr = (e, {title: r = "Rease App", hydrate: t = !0, target: n = null, rootPub: s = {}, reaserve: o = {}, props: a = {}, use: i, beforeCreate: l = null, onCreate: h = null} = {}) => {
-        var f = se;
-        se = {
-            on: !0,
-            _: {},
-            children: []
-        };
-        var u = $e(le.ROOT, null, null, {}, void 0);
-        u.page = {
-            css: {},
-            title: new ReaseStore(r)
-        }, u.reaserve = o, u.high = u.home = u.parent = null, u.pub = s, u.node = n, u.root = u, 
-        h && (u._.oc = [ h ]), ve((e => {
-            e.node = null;
-        })), n && ve(L(u.page.title, (e => {
-            document.title = e;
-        }))), se = f;
-        var d = [ u, e, a, i, t ];
-        l ? E(l(u), Er, d) : Er(0, d);
-    }, Lr = 0, Rr = 0, Or = 0, kr = 0, Ar = 0, Mr = () => {
-        Lr = window.innerWidth, Rr = window.innerHeight, Or = window.outerWidth, kr = window.outerHeight, 
-        $r.$ = Ur.$ = Hr.$ = Ir.$ = 0;
-    }, Cr = () => {
-        Mr(), setTimeout(Mr);
-    }, Sr = r ? () => (Cr(), Ar++ || window.addEventListener("resize", Cr), () => {
-        --Ar || window.removeEventListener("resize", Cr);
-    }) : g, $r = ae(0, Sr, (() => Lr)), Ur = ae(0, Sr, (() => Rr)), Hr = ae(0, Sr, (() => Or)), Ir = ae(0, Sr, (() => kr));
-
-    // https://ru.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B8%D1%86%D1%8B_%D0%B8%D0%B7%D0%BC%D0%B5%D1%80%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%B0%D1%81%D1%81%D1%8B
-
-    // import { EPSILON } from '.'
-
-    // Миллиграмм (мг)
-    const миллиграмм2грамм = (n) => {
-      const res = n / 1000;
-      return res
-    };
-    const грамм2миллиграмм = (n) => {
-      const res = n * 1000;
-      return res
-    };
-
-    // Килограмм (кг)
-    const килограмм2грамм = (n) => {
-      const res = n * 1000;
-      return res
-    };
-    const грамм2килограмм = (n) => {
-      const res = n / 1000;
-      return res
-    };
-
-    // Центнер
-    const центнер2грамм = (n) => {
-      const res = n * 100000;
-      return res
-    };
-    const грамм2центнер = (n) => {
-      const res = n / 100000;
-      return res
-    };
-
-    // Тонна
-    const тонна2грамм = (n) => {
-      const res = n * 1000000;
-      return res
-    };
-    const грамм2тонна = (n) => {
-      const res = n / 1000000;
-      return res
-    };
-
-    // Карат
-    const карат2грамм = (n) => {
-      const res = n * 0.2;
-      return res
-    };
-    const грамм2карат = (n) => {
-      const res = n / 0.2;
-      return res
-    };
-
-    // -----------------------------------------------------------------------------
-
-    // Американская система
-
-    // фунт — 453,59237 г (точное и официальное значение)
-    const фунт2грамм = (n) => {
-      const res = n * 45359237 / 100000;
-      return res
-    };
-    const грамм2фунт = (n) => {
-      const res = n * 100000 / 45359237;
-      return res
-    };
-
-    // Стоун — 14 фунтов, или 6,35029318 кг
-    const стоун2грамм = (n) => {
-      const res = n * 14 * 45359237 / 100000;
-      return res
-    };
-    const грамм2стоун = (n) => {
-      const res = n * 100000 / 14 / 45359237;
-      return res
-    };
-
-    // Унция — 1/16 фунта, или 1/224 стоуна, или 28,349523125 г
-    const унция2грамм = (n) => {
-      const res = n * 45359237 / 16 / 100000;
-      return res
-    };
-    const грамм2унция = (n) => {
-      const res = n * 16 * 100000 / 45359237;
-      return res
-    };
-
-    // Драхма (единица измерения массы, США) — 1/16 унции, или 1/256 фунта, или 1/3584 стоуна, или 1,7718451953125 г
-    const драхма2грамм = (n) => {
-      const res = n * 45359237 / 256 / 100000;
-      return res
-    };
-    const грамм2драхма = (n) => {
-      const res = n * 256 * 100000 / 45359237;
-      return res
-    };
-
-    // Гран — 1/98000 стоуна, или 1/7000 фунта, или 1/437,5 унции, или 1/27,34375 драхмы, или 64,79891 мг
-    const гран2грамм = (n) => {
-      const res = n * 45359237 / 7000 / 100000;
-      return res
-    };
-    const грамм2гран = (n) => {
-      const res = n * 7000 * 100000 / 45359237;
-      return res
-    };
-
-    // Короткая тонна = 20 коротких хандредвейтов = 2000 фунтов = 0,90718474 т
-    const кортонна2грамм = (n) => {
-      const res = n * 2000 * 45359237 / 100000;
-      return res
-    };
-    const грамм2кортонна = (n) => {
-      const res = n * 100000 / 2000 / 45359237;
-      return res
-    };
-
-    // Короткий хандредвейт = 100 фунтов = 45,359237 кг
-    const корхандредвейт2грамм = (n) => {
-      const res = n * 100 * 45359237 / 100000;
-      return res
-    };
-    const грамм2корхандредвейт = (n) => {
-      const res = n * 100000 / 100 / 45359237;
-      return res
-    };
-
-    // -----------------------------------------------------------------------------
-
-    // // Британская аптечная система
-    // const _TF = 3732417216
-    // const _TFC = 10000000
-    // // Тройский фунт (единица измерения), или аптечный фунт = 373,2417216 грамма
-    // export const тройскийфунт2грамм = (n: number): number => {
-    //   const res = n * _TF / _TFC
-    //   return res
-    // }
-    // export const грамм2тройскийфунт = (n: number): number => {
-    //   const res = n * _TFC / _TF
-    //   return res
-    // }
-
-    // // Тройская унция = 1/12 тройского фунта, или 31,1034768 грамма
-    // export const тройскаяунция2грамм = (n: number): number => {
-    //   const res = n * _TF / 12 / _TFC
-    //   return res
-    // }
-    // export const грамм2тройскаяунция = (n: number): number => {
-    //   const res = n * 12 * _TFC / _TF
-    //   return res
-    // }
-
-    // // Драхма (единица измерения массы, Великобритания) = 1/8 тройской унции, или 1/96 тройского фунта, или 3,8879346 грамма
-    // export const велдрахма2грамм = (n: number): number => {
-    //   const res = n * _TF / 96 / _TFC
-    //   return res
-    // }
-    // export const грамм2велдрахма = (n: number): number => {
-    //   const res = n * 96 * _TFC / _TF
-    //   return res
-    // }
-
-    // // Скрупул = 1/3 драхмы, или 1/288 тройского фунта, или 1,2959782 грамма
-    // export const скрупул2грамм = (n: number): number => {
-    //   const res = n * _TF / 288 / _TFC
-    //   return res
-    // }
-    // export const грамм2скрупул = (n: number): number => {
-    //   const res = n * 288 * _TFC / _TF
-    //   return res
-    // }
-
-    // // Гран = 1/20 скрупула, или 0,06479891 г
-    // export const велгран2грамм = (n: number): number => {
-    //   const res = n * _TF / 20 / 288 / _TFC
-    //   return res
-    // }
-    // export const грамм2велгран = (n: number): number => {
-    //   const res = n * 20 * 288 * _TFC / _TF
-    //   return res
-    // }
-
-    // Британская аптечная система
-    const _TF = 38879346; // - (0.1 + 0.2 - 0.3)
-    const _TFC = 10000000;
-
-    // Гран = 1/20 скрупула, или 0,06479891 г
-    const велгран2грамм = (n) => {
-      const res = n * _TF / 60 / _TFC;
-      return res
-    };
-    const грамм2велгран = (n) => {
-      const res = n * 60 * _TFC / _TF;
-      return res
-    };
-
-    // Скрупул = 1/3 драхмы, или 1/288 тройского фунта, или 1,2959782 грамма
-    const скрупул2грамм = (n) => {
-      const res = n * _TF / 3 / _TFC;
-      return res
-    };
-    const грамм2скрупул = (n) => {
-      const res = n * 3 * _TFC / _TF;
-      return res
-    };
-
-    // Драхма (единица измерения массы, Великобритания) = 1/8 тройской унции, или 1/96 тройского фунта, или 3,8879346 грамма
-    const велдрахма2грамм = (n) => {
-      const res = n * _TF / _TFC;
-      return res
-    };
-    const грамм2велдрахма = (n) => {
-      const res = n * _TFC / _TF;
-      return res
-    };
-
-    // Тройская унция = 1/12 тройского фунта, или 31,1034768 грамма
-    const тройскаяунция2грамм = (n) => {
-      const res = n * 8 * _TF / _TFC;
-      return res
-    };
-    const грамм2тройскаяунция = (n) => {
-      const res = n * _TFC / 8 / _TF;
-      return res
-    };
-
-    // Тройский фунт (единица измерения), или аптечный фунт = 373,2417216 грамма
-    const тройскийфунт2грамм = (n) => {
-      const res = n * 96 * _TF / _TFC;
-      return res
-    };
-    const грамм2тройскийфунт = (n) => {
-      const res = n * _TFC / 96 / _TF;
-      return res
-    };
-
-    // -----------------------------------------------------------------------------
-
-    // Русская система мер
-
-    // Берковец = 164 килограмма
-    const берковец2грамм = (n) => {
-      const res = n * 400 * 4095120375 / 10000000;
-      return res
-    };
-    const грамм2берковец = (n) => {
-      const res = n * 10000000 / 400 / 4095120375;
-      return res
-    };
-
-    // Пуд = 1/10 берковца = 40 фунтам = 1280 лотам = 3840 золотникам = 368 640 долям = 16,3804815 килограмма
-    const пуд2грамм = (n) => {
-      const res = n * 40 * 4095120375 / 10000000;
-      return res
-    };
-    const грамм2пуд = (n) => {
-      const res = n * 10000000 / 40 / 4095120375;
-      return res
-    };
-
-    // Фунт = 409,5120375 грамма
-    const русфунт2грамм = (n) => {
-      const res = n * 4095120375 / 10000000;
-      return res
-    };
-    const грамм2русфунт = (n) => {
-      const res = n * 10000000 / 4095120375;
-      return res
-    };
-
-    // Лот = 1/32 фунта = 3 золотникам = 288 долям = 12,797 251 191 395 300 грамма
-    const руслот2грамм = (n) => {
-      const res = n * 4095120375 / 32 / 10000000;
-      return res
-    };
-    const грамм2руслот = (n) => {
-      const res = n * 32 * 10000000 / 4095120375;
-      return res
-    };
-
-    // Золотник = 1/96 фунта = 4,26575417 грамма
-    const золотник2грамм = (n) => {
-      const res = n * 4095120375 / 96 / 10000000;
-      return res
-    };
-    const грамм2золотник = (n) => {
-      const res = n * 96 * 10000000 / 4095120375;
-      return res
-    };
-
-    // Доля = 1/96 золотника = 44,435 миллиграмма
-    const доля2грамм = (n) => {
-      const res = n * 4095120375 / 96 / 96 / 10000000;
-      return res
-    };
-    const грамм2доля = (n) => {
-      const res = n * 96 * 96 * 10000000 / 4095120375;
-      return res
-    };
-
-    // -----------------------------------------------------------------------------
-
-    // Европейские меры массы
-
-    // Аса — Германия, Голландия = 0,048063 г
-    // export const аса2грамм = (n: number): number => {
-    //   const res = n * 48063 * 1000000
-    //   return res
-    // }
-    // export const грамм2аса = (n: number): number => {
-    //   const res = n / 48063 / 1000000
-    //   return res
-    // }
-
-    const { random: randomDefault } = Math;
-    const random = () => randomDefault() || random();
-
-    const createRandomtring = () => 'r' + random().toString(32).slice(2);
-
-    /* eslint-disable @typescript-eslint/explicit-function-return-type */
-
-    let globalId = '';
-
-    const createInput = (
-      label, short, $value,
-      fromBase,
-      toBase
-    ) => {
-      let value = null;
-      const id = createRandomtring()
-      ;(
-          Ve("div", { class: "form-floating my-2" })(
-        Ve("input", { type: "number", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/ie([$value], (_$0) => ((globalId === id && value != null ? value : value = fromBase(_$0[0])) || 0)) }, [Z('input', (e) => {
-              globalId = id;
-              $value.set(toBase(value = +e.target.value || 0));
-            }), Z('blur', (e) => {
-              if (globalId === id) {
-                globalId = '';
-                const cel = toBase(+e.target.value || 0);
-                e.target.value = value = fromBase(cel);
-                $value.set(cel);
               }
-            })])(),
-        Ve("label", { for: id })(
-          Fe(label),
-          Ve("span", { class: "text-success fw-bold" })(
-            Fe(" "),
-            Fe(short)
-          )
+
+            case 'passive':
+              {
+                passive = true;
+                break;
+              }
+
+            case 'capture':
+              {
+                capture = true;
+                break;
+              }
+
+            case 'self':
+              {
+                cb = wrap_self(cb);
+                break;
+              }
+
+            case 'trusted':
+              {
+                cb = wrap_trusted(cb);
+                break;
+              }
+
+            case 'stop':
+              {
+                fns.unshift(stopPropagation);
+                break;
+              }
+
+            case 'prevent':
+              {
+                fns.unshift(preventDefault);
+                break;
+              }
+
+            default:
+              {
+                if (s.length === 1 || /[A-Z]/.test(s[0])) {
+                  s in keypad || (keypad[s] = true, keypadLen++);
+                } else if (!i) type = s;
+              }
+          }
+        }
+      }
+
+      var options = {
+        passive,
+        capture
+      };
+      if (keypadLen) runKeypad(), cb = wrap_keys(cb, keypad, keypadLen);
+
+      if (type) {
+        E.addEventListener(type = a[0], cb, options); // const matches = type.match(REG_SYNTHETIC_EVENTS)
+        // if (!matches) addEventListener(E, type = a[0], cb, options)
+        // else type = void 0, runSyntheticEvents(), createSyntheticEvent(matches, E, fns, cb)
+      } else KEYPADS_LIST.push([fns, cb]);
+
+      return unsub;
+    };
+  })();
+
+  var _USE_LISTEN = (type, listener) => ctx => listen(ctx.node, type, listener, ctx);
+  /* filename: __src__/ReaseStore.ts
+    timestamp: 2022-07-05T23:02:32.930Z */
+
+
+  var needSet = (prev, next) => !isEqual(prev, next) || isObject(next) || isFunction(next);
+
+  var runQueue = (iam, value, force) => {
+    iam._value = value; // @ts-ignore
+
+    var _ = iam._;
+    _.break = true;
+    var items = _.items;
+    var queue = _.queue; // if (force || !isEqual(value, queue.length ? queue[queue.length - 1][1] : iam._value)) {
+
+    queue.push({
+      f: force,
+      n: value
+    });
+
+    if (queue.length === 1) {
+      for (var fs, t = 0; t < queue.length; t++) {
+        if ((fs = queue[t].f) || t > queue.length - 2) {
+          _.break = false;
+
+          for (var q = queue[t], i = 0; i < items.length; i++) {
+            if (fs || needSet(items[i].o, q.n)) {
+              items[i].s(iam._value = items[i].o = q.n);
+            }
+
+            if (!fs && _.break) {
+              items[i].o = iam._value;
+              break;
+            }
+          }
+        }
+      }
+
+      queue.length = 0;
+    } // }
+
+
+    return iam;
+  };
+
+  class ReaseStore {
+    constructor(value, onFirstSubscribe, proxyForSet, proxyForGet) {
+      this._ = {
+        items: [],
+        queue: [],
+        mwSet: proxyForSet || (proxyForSet = noop0),
+        mwGet: proxyForGet || noop0,
+        onRun: onFirstSubscribe || noop,
+        onEnd: noop,
+        break: false
+      };
+      this._value = proxyForSet(value, this); // console.log(this)
+    } // get updating(): boolean {
+    //   return this._.queue.length > 1
+    // }
+
+
+    get on() {
+      return this._.items.length > 0;
+    }
+
+    get value() {
+      return this._value;
+    }
+
+    get() {
+      return this._.mwGet(this._value, this);
+    }
+
+    set(value) {
+      return needSet(this._value, value = this._.mwSet(value, this)) ? runQueue(this, value, false) : this;
+    }
+
+    next(value) {
+      return runQueue(this, this._.mwSet(value, this), true);
+    }
+
+    clear() {
+      for (var a = this._.items, i = a.length; i-- > 0;) {
+        a[i].u();
+      }
+
+      return this;
+    }
+
+    subscribe(callback, ctx) {
+      var item = {
+        s: v => {
+          callback(v, ctx, item.u);
+        },
+        u: () => {
+          if (item.s !== noop) {
+            for (var i = items.length; i-- > 0;) {
+              if (items[i].s === item.s) {
+                items.splice(i, 1);
+                break;
+              }
+            }
+
+            item.s = item.u = noop;
+            if (!items.length) _.onEnd(this);
+          }
+        },
+        o: {}
+      };
+      var _ = this._;
+      var items = _.items;
+      if (!items.length) _.onEnd = _.onRun(this) || noop;
+      items.push(item);
+      if (!_.queue.length) item.s(item.o = this._value);
+      return item.u;
+    }
+
+  }
+
+  var ReaseStoreProto = ReaseStore.prototype;
+  defineProperty(ReaseStoreProto, '$', {
+    get: ReaseStoreProto.get,
+    set: ReaseStoreProto.set
+  });
+
+  var _loop = function (a, i) {
+    defineProperty(ReaseStoreProto, a[i], {
+      value: function () {
+        var v = this.get();
+        v = v == null || !v[a[i]] ? v : v[a[i]](arguments);
+        return !i ? v : v + '';
+      }
+    });
+  };
+
+  for (var a = ['valueOf', 'toString', 'toJSON'], i = 3; i-- > 0;) {
+    _loop(a, i);
+  }
+
+  var store = (value, onFirstSubscribe, proxyForSet, proxyForGet) => new ReaseStore(value, onFirstSubscribe, proxyForSet, proxyForGet); // const q = store<any[]>([])
+  // console.log([].length)
+  // const q = new ReaseStore(12, (a) => '' + a)
+  // q.subscribe((a, b, c) => {
+  //   console.log(a, b, c)
+  // }, 12)
+  // const qq = new ReaseStore(1, () => {
+  //   console.log('First sub')
+  //   return (): void => {
+  //     console.log('End sub')
+  //   }
+  // })
+  // console.log(qq)
+  // // qq.subscribe((v, _c, unsub) => {
+  // //   console.log(11, v)
+  // //   unsub()
+  // // })
+  // let i = 0
+  // qq.subscribe((v, _ctx, unsub) => {
+  //   console.log(22, v)
+  //   qq.$ = 2
+  //   if (i++ >= 6) unsub()
+  // })
+  // qq.subscribe((v, _c, unsub) => {
+  //   console.log(33, v)
+  //   unsub()
+  // })
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // // qq.$++
+  // // qq.$++
+  // import { ReaseStore } from './rease2/store'
+  // const qq = new ReaseStore(1, (v) => {
+  //   console.log(111, v)
+  //   return v * 2
+  // })
+  // console.log(qq)
+  // qq.subscribe((v) => {
+  //   console.log('q1', v)
+  // })
+  // qq.subscribe((v) => {
+  //   console.log('q2', v)
+  //   if (v === 6) qq.$ = 10
+  // })
+  // qq.subscribe((v) => {
+  //   console.log('q3', v)
+  // })
+  // qq.subscribe((v) => {
+  //   console.log('q4', v)
+  // })
+  // // qq.subscribe((v) => {
+  // //   console.log('q5', v)
+  // // })
+  // // qq.subscribe((v) => {
+  // //   console.log('q6', v)
+  // // })
+  // // qq.next(qq.$ + 1)
+  // // qq.next(qq.$ + 1)
+  // // qq.next(qq.$ + 1)
+  // // qq.next(qq.$ + 1)
+  // // qq.next(qq.$ + 1)
+  // // qq.next(qq.$ + 1)
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // qq.$++
+  // // qq.$++
+  // // qq.$++
+  // // qq.$++
+  // // qq.$++
+  // // qq.$++
+
+  /* filename: __src__/main.ts
+    timestamp: 2022-07-05T14:51:14.332Z */
+  // $
+
+
+  var _$ = storablefySafeAllWithProxy; //------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------
+
+  var TYPES = {
+    ROOT: 'ROOT',
+    COMPONENT: 'COMPONENT',
+    ELEMENT: 'ELEMENT',
+    FRAGMENT: 'FRAGMENT',
+    SLOT: 'SLOT',
+    TEXT: 'TEXT',
+    EXPRESSION: 'EXPRESSION',
+    COMMENT: 'COMMENT',
+    HTML: 'HTML',
+    RULES: {
+      TAG: 'RULE_TAG',
+      IF: 'RULE_IF',
+      ELIF: 'RULE_ELIF',
+      ELSE: 'RULE_ELSE',
+      WATCH: 'RULE_WATCH',
+      AWAIT: 'RULE_AWAIT',
+      THEN: 'RULE_THEN',
+      FOR: 'RULE_FOR'
+    }
+  };
+  var HIGH_NODE, HOME_NODE, CURRENT_NODE; // const hooks__Factory = (key: 'oc' | 'od') => (
+  //   fn: TypeReaseHook // , ctx?: TypeReaseContext
+  // ): void => {
+  //   const ctx = CURRENT_NODE
+  //   if (ctx.type !== TYPES.COMPONENT) throw hooks__Factory
+  //   ctx.on ? (ctx._[key] || (ctx._[key] = [])).push(fn) : callFnOrThenFn(fn, ctx)
+  // }
+  // export const onCreated = hooks__Factory('oc')
+  // export const onDestroy = hooks__Factory('od')
+
+  var i2p = ctx => {
+    CURRENT_NODE = ctx, HIGH_NODE = ctx.high, HOME_NODE = ctx.home;
+  };
+
+  var c2p = ctx => {
+    CURRENT_NODE = ctx.parent;
+  };
+
+  var c2n = () => {
+    // @ts-ignore
+    CURRENT_NODE = null;
+  }; // const saveTree = (ctx: TypeReaseContext): [any, any, any] => {
+
+  function onDestroy(fn) {
+    var ctx = isRease(this) ? this : CURRENT_NODE;
+    if (!isRease(ctx)) throw fn; // if (ctx.type !== TYPES.COMPONENT) throw onDestroy
+
+    ctx.on ? (ctx._.od || (ctx._.od = [])).push(fn) : fn(ctx);
+  }
+  // updated
+  // destroy
+
+
+  var initUse = ctx => {
+    if (ctx.use) {
+      for (var esu = ctx._.esu || (ctx._.esu = []), _i2 = 0; _i2 < ctx.use.length; _i2++) {
+        i2p(ctx), esu.push(ctx.use[_i2](ctx));
+
+        if (!ctx.on) {
+          removeUse(ctx);
+          break;
+        }
+      }
+    }
+  };
+
+  var createdUse = ctx => {
+    if (ctx._.esu) {
+      for (var item, esu = ctx._.esu, _i3 = 0; _i3 < esu.length; _i3++) {
+        if ((item = esu[_i3]) && isFunction(item = item.created)) {
+          i2p(ctx), item(ctx);
+
+          if (!ctx.on) {
+            removeUse(ctx);
+            break;
+          }
+        }
+      }
+    }
+  };
+
+  var removeUse = ctx => {
+    if (ctx._.esu) {
+      for (var item, _a2 = ctx._.esu; _a2.length;) {
+        if ((item = _a2.pop()) && isFunction(item = item.destroy || item)) i2p(ctx), item(ctx);
+      }
+    }
+  };
+
+  var HYDRO = {
+    // TEXT_NODE = 3
+    3: [],
+    // COMMENT_NODE = 8
+    8: []
+  };
+  var REG_NODE_LOCAL_NAME = /^(?:input|style|script)$/i;
+
+  var saveNodeForHydro = (node, maxValue) => {
+    var type = node.nodeType;
+    if (type === 3 || type === 8) HYDRO[type].length < maxValue && HYDRO[type].push(node);else if (type === 1 && !REG_NODE_LOCAL_NAME.test(node.localName)) {
+      type = node.localName + node.namespaceURI;
+      if (!(type in HYDRO)) HYDRO[type] = [];
+
+      if (HYDRO[type].length < maxValue) {
+        for (var _a3 = node.childNodes, _i4 = _a3.length; _i4-- > 0;) {
+          node.removeChild(_a3[_i4]);
+        }
+
+        if (node.value) node.value = null;
+        if (node.type) node.type = null;
+        HYDRO[type].push(node);
+      }
+    }
+  };
+
+  var runDestroyers = ctx => {
+    if (ctx._.od) for (; ctx._.od.length;) {
+      ctx._.od.pop()(ctx);
+    }
+  };
+
+  var destroySystem = ctx => {
+    if (ctx && ctx.on) {
+      // @ts-ignore
+      ctx.on = false;
+      removeUse(ctx);
+      runDestroyers(ctx);
+      removeAttributes(ctx);
+      if (ctx._.ods) ctx._.ods();
+      var node = ctx.node;
+      if (node && node.parentNode) node.parentNode.removeChild(node);
+      destroyChildren(ctx);
+      if (node) saveNodeForHydro(node, 25);
+      if (ctx._.$) ctx._.$ = 1, __runHookForComponent(ctx);
+    }
+  };
+
+  var destroyChildren = ctx => {
+    for (; ctx.children.length;) {
+      destroySystem(ctx.children.pop());
+    }
+  };
+  //   tagName in NAMESPACES_URI ? NAMESPACES_URI[tagName] : defaultNamespaceURI
+
+
+  var generateHTML__Factory = f => ctx => {
+    if (ctx.root.node) {
+      for (var ctxParent = ctx, parentN, nextN;;) {
+        ctxParent = ctxParent.parent;
+
+        if (parentN = ctxParent.node) {
+          if (parentN.nodeType === 1) {
+            f(ctx, parentN), parentN.appendChild(ctx.node);
+          } else {
+            nextN = parentN;
+            f(ctx, parentN = nextN.parentNode), parentN.insertBefore(ctx.node, nextN);
+          }
+
+          break;
+        }
+      }
+    } // else if (f2) f2(ctx)
+
+  };
+
+  var createAttributes = ctx => {
+    var attrs = ctx.attrs;
+    var value;
+    var atx;
+    var fns;
+
+    for (var name in ctx.props) {
+      atx = attrs[name] = {
+        is: null,
+        _is: value = ctx.props[name],
+        high: ctx.high,
+        _: {
+          $: 0,
+          u: noop
+        }
+      };
+
+      if (isStorable(value) || isThenable(value) && (value = storablefyThenable(value), true)) {
+        __intHookForComponent(atx);
+
+        atx._.u = __subscribeSafeStrict(value, (v, [ctx, atx, name, fns], u) => {
+          atx._.u = u;
+          if (!ctx.on) u();else if (atx.is !== (atx.is = v = fns[1](v)) && ctx.node) {
+            fns[0](ctx.node, name, v, ctx);
+          }
+
+          __runHookForComponent(atx);
+        }, [ctx, atx, name, getAttributeTypeFns(name, ctx._)]);
+
+        if (!ctx.on) {
+          atx._.u();
+
+          break;
+        }
+      } else {
+        fns = getAttributeTypeFns(name, ctx._);
+        atx.is = value = fns[1](value);
+        ctx.node && fns[0](ctx.node, name, value, ctx);
+      }
+    }
+  };
+
+  var removeAttributes = ctx => {
+    var attrs = ctx.attrs;
+
+    if (attrs) {
+      // @ts-ignore
+      ctx.attrs = null;
+      var node = ctx.node;
+
+      for (var name in attrs) {
+        if (node) {
+          if (node.hasAttribute(name)) node.removeAttribute(name); // @ts-ignore
+          else if (name in node) node[name] = null;
+        }
+
+        attrs[name]._.u(), __runHookForComponent(attrs[name]);
+      }
+    }
+  };
+
+  var generateHTMLElement = (f => ctx => {
+    // @ts-ignore
+    ctx.attrs = {};
+    f(ctx), ctx.node || createAttributes(ctx);
+  })(generateHTML__Factory((ctx, parentEl) => {
+    // @ts-ignore
+    var uri = NAMESPACES_URI[ctx.is] || parentEl.namespaceURI,
+        k = ctx.is + uri;
+    var node = k in HYDRO && HYDRO[k].pop();
+    if (!node) node = document.createElementNS(uri, ctx.is);else {
+      // if (node.value) node.value = null
+      // for (let a = node.childNodes, i = a.length; i-- > 0;) node.removeChild(a[i])
+      for (var _a4 = node.attributes, _i5 = _a4.length; _i5-- > 0;) {
+        node.removeAttribute(_a4[_i5].name);
+      }
+    } // @ts-ignore
+
+    ctx.node = node;
+    initUse(ctx);
+    createAttributes(ctx);
+    i2p(ctx);
+  }));
+  var generateHTMLText = generateHTML__Factory(ctx => {
+    if (HYDRO[3].length) (ctx.node = HYDRO[3].pop()).data = ctx.is;else ctx.node = document.createTextNode(ctx.is);
+  });
+
+  var createScheme = (type, _is, is, props, use, name) => CURRENT_NODE = CURRENT_NODE.children[CURRENT_NODE.children.push({
+    type: type,
+    name: name,
+    is: is,
+    _is: _is,
+    node: null,
+    props: props,
+    use: use,
+    root: CURRENT_NODE.root,
+    home: HOME_NODE,
+    high: HIGH_NODE,
+    parent: CURRENT_NODE,
+    children: [],
+    slots: null,
+    attrs: null,
+    on: CURRENT_NODE.on,
+    pub: {},
+    _: {
+      ir: IS_REASE_NODE,
+      $: 0 // sn: sn,
+      // if  : null as any,
+      // oc: null,
+      // od: null
+
+    }
+  }) - 1];
+
+  var __intHookForComponent = ctx => {
+    ctx.high._.$++, ctx._.$++;
+  };
+
+  var __runHookForComponent = ctx => {
+    if (ctx && ctx._.$ > 0) {
+      ctx._.$--;
+
+      if (ctx.type !== TYPES.COMPONENT && ctx.type !== TYPES.ROOT) {
+        __runHookForComponent(ctx.high);
+      } else if (ctx._.$ === 0) {
+        ctx._.$ = NaN;
+        var oc = ctx._.oc;
+
+        if (oc) {
+          var promises = [];
+
+          for (var _i6 = 0; _i6 < oc.length; _i6++) {
+            i2p(ctx), promises.push(oc[_i6](ctx));
+            if (!ctx.on) break;
+          }
+
+          c2n();
+          thenSafeAll(promises, (a, ctx) => {
+            if (!ctx.on) for (var _i7 = a.length; _i7--;) {
+              isFunction(a[_i7]) && (i2p(ctx), a[_i7](ctx));
+            } else {
+              for (var _i8 = a.length; _i8--;) {
+                isFunction(a[_i8]) && onDestroy(a[_i8]);
+              }
+
+              __runHookForComponent(ctx.high);
+            }
+            c2n();
+          }, ctx);
+        } else {
+          __runHookForComponent(ctx.high);
+        }
+      }
+    }
+  };
+  /*
+  --------------------------------------------------------------------------------
+  TEXT
+  --------------------------------------------------------------------------------
+  */
+  // TEXT
+
+
+  var _TEXT = text => {
+    if (CURRENT_NODE.on && text !== void 0 && text !== '') {
+      generateHTMLText(createScheme(TYPES.TEXT, text, '' + text));
+      c2p(CURRENT_NODE);
+    }
+  };
+
+  var createStyleNode = cid => {
+    var node = document.createElement('style');
+    node.id = cid, document.head.appendChild(node);
+    return node;
+  };
+
+  var setGlobalCSS = (root, css) => {
+    if (css && !(css[0] in root.page.css)) {
+      root.page.css[css[0]] = '';
+      root._.$++;
+
+      root._.od.push(subscribeSafe(css[1], (css, [root, cid, isGlobal, oldCss, styleNodeBox], u) => {
+        if (!root.on) u();else if (oldCss[0] !== (oldCss[0] = css)) {
+          if (!isGlobal) {
+            css = css.replace(/(\.[^\s>+,~{}();'"`]+)(?=[^{}();'"`]*{)/g, '$1.' + cid);
+          }
+
+          root.page.css[cid] = css;
+
+          if (root.node) {
+            var styleNode = styleNodeBox[0] || (styleNodeBox[0] = document.getElementById(cid) || createStyleNode(cid));
+            styleNode.textContent = css;
+          }
+        }
+
+        __runHookForComponent(root);
+      }, [root, css[0], css[2], [''], [null]]));
+    }
+  }; // COMPONENT
+
+
+  var tagComponentChildren = childrenSlots => {
+    var ctx = CURRENT_NODE; // @ts-ignore
+
+    ctx.slots = childrenSlots;
+
+    __intHookForComponent(ctx);
+
+    HIGH_NODE = HOME_NODE = ctx;
+    ctx.is.call(ctx, ctx.props);
+
+    __runHookForComponent(ctx);
+
+    HIGH_NODE = ctx.high, HOME_NODE = ctx.home;
+    c2p(ctx);
+  };
+
+  var _COMPONENT = (cmpFn, props, use) => CURRENT_NODE.on ? (createScheme(TYPES.COMPONENT, cmpFn, cmpFn, props || {}, use, cmpFn.name), setGlobalCSS(CURRENT_NODE.root, cmpFn.css), tagComponentChildren) : noop;
+  /*
+  --------------------------------------------------------------------------------
+  ELEMENT
+  --------------------------------------------------------------------------------
+  */
+  // ELEMENT
+
+
+  var tagElementChildren = () => {
+    var ctx = CURRENT_NODE;
+    createdUse(ctx), c2p(ctx);
+  };
+
+  var _ELEMENT = (tag, props, use) => CURRENT_NODE.on ? (generateHTMLElement(createScheme(TYPES.ELEMENT, tag, tag, props || {}, use)), tagElementChildren) : noop; // Runner for function (r-children) in elements or fragments
+  // const saveEnv = (): any[] => [HIGH_NODE, HOME_NODE, PARENT_NODE, CURRENT_NODE]
+  // const loadEnv = (a: any[]): void => {
+  //   HIGH_NODE = a[0], HOME_NODE = a[1], PARENT_NODE = a[2], CURRENT_NODE = a[3]
+  // }
+
+
+  var grabNodesForHydrate = node => {
+    if (node.parentNode) node.parentNode.removeChild(node);
+
+    if (node.childNodes) {
+      for (var _a11 = node.childNodes, _i21 = _a11.length; _i21-- > 0;) {
+        grabNodesForHydrate(_a11[_i21]);
+      }
+    }
+
+    saveNodeForHydro(node, 999);
+  };
+
+  var __runApp = (_a, [root, component, props, use, hydrate]) => {
+    var current = CURRENT_NODE,
+        high = HIGH_NODE,
+        home = HOME_NODE;
+
+    if (hydrate && root.node) {
+      for (var node, _a12 = root.node.childNodes, _i22 = _a12.length; _i22-- > 0;) {
+        if ((node = _a12[_i22]).localName !== 'script' && node.localName !== 'style') {
+          grabNodesForHydrate(node);
+        }
+      }
+    }
+
+    HIGH_NODE = HOME_NODE = CURRENT_NODE = root, root._.$++;
+
+    _COMPONENT(component, props, use)((onDestroy(ctx => {
+      ctx.root.node = null, destroySystem(ctx.root);
+    }), []));
+
+    __runHookForComponent(root);
+
+    CURRENT_NODE = current, HIGH_NODE = high, HOME_NODE = home;
+  };
+
+  var createReaseApp = (component, {
+    title = 'Rease App',
+    hydrate = true,
+    target = null,
+    rootPub = {},
+    reaserve = {},
+    props = {},
+    use = void 0,
+    beforeCreate = null,
+    onCreate = null
+  } = {}) => {
+    var current = CURRENT_NODE;
+    CURRENT_NODE = {
+      on: true,
+      _: {},
+      children: []
+    };
+    var root = createScheme(TYPES.ROOT, null, null, {}, void 0); // @ts-ignore
+
+    root.page = {
+      css: {},
+      title: new ReaseStore(title)
+    }; // @ts-ignore
+
+    root.reaserve = reaserve; // @ts-ignore
+
+    root.high = root.home = root.parent = null; // @ts-ignore
+
+    root.pub = rootPub, root.node = target, root.root = root;
+    onCreate && (root._.oc = [onCreate]);
+    onDestroy(root => {
+      root.node = null;
+    });
+
+    if (target) {
+      onDestroy(subscribeSafe(root.page.title, title => {
+        document.title = title;
+      }));
+    }
+
+    CURRENT_NODE = current;
+    var ctx = [root, component, props, use, hydrate];
+    beforeCreate ? thenSafe(beforeCreate(root), __runApp, ctx) : __runApp(0, ctx); // console.log(root)
+  };
+  /* filename: __src__/window.ts
+    timestamp: 2022-07-05T15:06:08.772Z */
+
+
+  var __window__ = isBrowser ? window : {
+    innerWidth: 0,
+    innerHeight: 0,
+    outerWidth: 0,
+    outerHeight: 0
+  };
+
+  var resizeCount = 0;
+
+  var __resize__ = () => {
+    $innerWidth.$ = $innerHeight.$ = $outerWidth.$ = $outerHeight.$ = -1;
+  };
+
+  var resize = () => {
+    setTimeout(__resize__);
+  };
+
+  var rFirsts = !isBrowser ? noopNoop : () => {
+    resizeCount++ || window.addEventListener('resize', resize);
+    return () => {
+      --resizeCount || window.removeEventListener('resize', resize);
+    };
+  };
+
+  var innerWidthFn = () => __window__.innerWidth;
+
+  var innerHeightFn = () => __window__.innerHeight;
+
+  var outerWidthFn = () => __window__.outerWidth;
+
+  var outerHeightFn = () => __window__.outerHeight;
+
+  var $innerWidth = store(0, rFirsts, innerWidthFn, innerWidthFn);
+  var $innerHeight = store(0, rFirsts, innerHeightFn, innerHeightFn);
+  var $outerWidth = store(0, rFirsts, outerWidthFn, outerWidthFn);
+  var $outerHeight = store(0, rFirsts, outerHeightFn, outerHeightFn); // export const $scrollX = storeGlobal<number>(0)
+
+  // https://ru.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B8%D1%86%D1%8B_%D0%B8%D0%B7%D0%BC%D0%B5%D1%80%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%B0%D1%81%D1%81%D1%8B
+
+  // import { EPSILON } from '.'
+
+  // Миллиграмм (мг)
+  const миллиграмм2грамм = (n) => {
+    const res = n / 1000;
+    return res
+  };
+  const грамм2миллиграмм = (n) => {
+    const res = n * 1000;
+    return res
+  };
+
+  // Килограмм (кг)
+  const килограмм2грамм = (n) => {
+    const res = n * 1000;
+    return res
+  };
+  const грамм2килограмм = (n) => {
+    const res = n / 1000;
+    return res
+  };
+
+  // Центнер
+  const центнер2грамм = (n) => {
+    const res = n * 100000;
+    return res
+  };
+  const грамм2центнер = (n) => {
+    const res = n / 100000;
+    return res
+  };
+
+  // Тонна
+  const тонна2грамм = (n) => {
+    const res = n * 1000000;
+    return res
+  };
+  const грамм2тонна = (n) => {
+    const res = n / 1000000;
+    return res
+  };
+
+  // Карат
+  const карат2грамм = (n) => {
+    const res = n * 0.2;
+    return res
+  };
+  const грамм2карат = (n) => {
+    const res = n / 0.2;
+    return res
+  };
+
+  // -----------------------------------------------------------------------------
+
+  // Американская система
+
+  // фунт — 453,59237 г (точное и официальное значение)
+  const фунт2грамм = (n) => {
+    const res = n * 45359237 / 100000;
+    return res
+  };
+  const грамм2фунт = (n) => {
+    const res = n * 100000 / 45359237;
+    return res
+  };
+
+  // Стоун — 14 фунтов, или 6,35029318 кг
+  const стоун2грамм = (n) => {
+    const res = n * 14 * 45359237 / 100000;
+    return res
+  };
+  const грамм2стоун = (n) => {
+    const res = n * 100000 / 14 / 45359237;
+    return res
+  };
+
+  // Унция — 1/16 фунта, или 1/224 стоуна, или 28,349523125 г
+  const унция2грамм = (n) => {
+    const res = n * 45359237 / 16 / 100000;
+    return res
+  };
+  const грамм2унция = (n) => {
+    const res = n * 16 * 100000 / 45359237;
+    return res
+  };
+
+  // Драхма (единица измерения массы, США) — 1/16 унции, или 1/256 фунта, или 1/3584 стоуна, или 1,7718451953125 г
+  const драхма2грамм = (n) => {
+    const res = n * 45359237 / 256 / 100000;
+    return res
+  };
+  const грамм2драхма = (n) => {
+    const res = n * 256 * 100000 / 45359237;
+    return res
+  };
+
+  // Гран — 1/98000 стоуна, или 1/7000 фунта, или 1/437,5 унции, или 1/27,34375 драхмы, или 64,79891 мг
+  const гран2грамм = (n) => {
+    const res = n * 45359237 / 7000 / 100000;
+    return res
+  };
+  const грамм2гран = (n) => {
+    const res = n * 7000 * 100000 / 45359237;
+    return res
+  };
+
+  // Короткая тонна = 20 коротких хандредвейтов = 2000 фунтов = 0,90718474 т
+  const кортонна2грамм = (n) => {
+    const res = n * 2000 * 45359237 / 100000;
+    return res
+  };
+  const грамм2кортонна = (n) => {
+    const res = n * 100000 / 2000 / 45359237;
+    return res
+  };
+
+  // Короткий хандредвейт = 100 фунтов = 45,359237 кг
+  const корхандредвейт2грамм = (n) => {
+    const res = n * 100 * 45359237 / 100000;
+    return res
+  };
+  const грамм2корхандредвейт = (n) => {
+    const res = n * 100000 / 100 / 45359237;
+    return res
+  };
+
+  // -----------------------------------------------------------------------------
+
+  // // Британская аптечная система
+  // const _TF = 3732417216
+  // const _TFC = 10000000
+  // // Тройский фунт (единица измерения), или аптечный фунт = 373,2417216 грамма
+  // export const тройскийфунт2грамм = (n: number): number => {
+  //   const res = n * _TF / _TFC
+  //   return res
+  // }
+  // export const грамм2тройскийфунт = (n: number): number => {
+  //   const res = n * _TFC / _TF
+  //   return res
+  // }
+
+  // // Тройская унция = 1/12 тройского фунта, или 31,1034768 грамма
+  // export const тройскаяунция2грамм = (n: number): number => {
+  //   const res = n * _TF / 12 / _TFC
+  //   return res
+  // }
+  // export const грамм2тройскаяунция = (n: number): number => {
+  //   const res = n * 12 * _TFC / _TF
+  //   return res
+  // }
+
+  // // Драхма (единица измерения массы, Великобритания) = 1/8 тройской унции, или 1/96 тройского фунта, или 3,8879346 грамма
+  // export const велдрахма2грамм = (n: number): number => {
+  //   const res = n * _TF / 96 / _TFC
+  //   return res
+  // }
+  // export const грамм2велдрахма = (n: number): number => {
+  //   const res = n * 96 * _TFC / _TF
+  //   return res
+  // }
+
+  // // Скрупул = 1/3 драхмы, или 1/288 тройского фунта, или 1,2959782 грамма
+  // export const скрупул2грамм = (n: number): number => {
+  //   const res = n * _TF / 288 / _TFC
+  //   return res
+  // }
+  // export const грамм2скрупул = (n: number): number => {
+  //   const res = n * 288 * _TFC / _TF
+  //   return res
+  // }
+
+  // // Гран = 1/20 скрупула, или 0,06479891 г
+  // export const велгран2грамм = (n: number): number => {
+  //   const res = n * _TF / 20 / 288 / _TFC
+  //   return res
+  // }
+  // export const грамм2велгран = (n: number): number => {
+  //   const res = n * 20 * 288 * _TFC / _TF
+  //   return res
+  // }
+
+  // Британская аптечная система
+  const _TF = 38879346; // - (0.1 + 0.2 - 0.3)
+  const _TFC = 10000000;
+
+  // Гран = 1/20 скрупула, или 0,06479891 г
+  const велгран2грамм = (n) => {
+    const res = n * _TF / 60 / _TFC;
+    return res
+  };
+  const грамм2велгран = (n) => {
+    const res = n * 60 * _TFC / _TF;
+    return res
+  };
+
+  // Скрупул = 1/3 драхмы, или 1/288 тройского фунта, или 1,2959782 грамма
+  const скрупул2грамм = (n) => {
+    const res = n * _TF / 3 / _TFC;
+    return res
+  };
+  const грамм2скрупул = (n) => {
+    const res = n * 3 * _TFC / _TF;
+    return res
+  };
+
+  // Драхма (единица измерения массы, Великобритания) = 1/8 тройской унции, или 1/96 тройского фунта, или 3,8879346 грамма
+  const велдрахма2грамм = (n) => {
+    const res = n * _TF / _TFC;
+    return res
+  };
+  const грамм2велдрахма = (n) => {
+    const res = n * _TFC / _TF;
+    return res
+  };
+
+  // Тройская унция = 1/12 тройского фунта, или 31,1034768 грамма
+  const тройскаяунция2грамм = (n) => {
+    const res = n * 8 * _TF / _TFC;
+    return res
+  };
+  const грамм2тройскаяунция = (n) => {
+    const res = n * _TFC / 8 / _TF;
+    return res
+  };
+
+  // Тройский фунт (единица измерения), или аптечный фунт = 373,2417216 грамма
+  const тройскийфунт2грамм = (n) => {
+    const res = n * 96 * _TF / _TFC;
+    return res
+  };
+  const грамм2тройскийфунт = (n) => {
+    const res = n * _TFC / 96 / _TF;
+    return res
+  };
+
+  // -----------------------------------------------------------------------------
+
+  // Русская система мер
+
+  // Берковец = 164 килограмма
+  const берковец2грамм = (n) => {
+    const res = n * 400 * 4095120375 / 10000000;
+    return res
+  };
+  const грамм2берковец = (n) => {
+    const res = n * 10000000 / 400 / 4095120375;
+    return res
+  };
+
+  // Пуд = 1/10 берковца = 40 фунтам = 1280 лотам = 3840 золотникам = 368 640 долям = 16,3804815 килограмма
+  const пуд2грамм = (n) => {
+    const res = n * 40 * 4095120375 / 10000000;
+    return res
+  };
+  const грамм2пуд = (n) => {
+    const res = n * 10000000 / 40 / 4095120375;
+    return res
+  };
+
+  // Фунт = 409,5120375 грамма
+  const русфунт2грамм = (n) => {
+    const res = n * 4095120375 / 10000000;
+    return res
+  };
+  const грамм2русфунт = (n) => {
+    const res = n * 10000000 / 4095120375;
+    return res
+  };
+
+  // Лот = 1/32 фунта = 3 золотникам = 288 долям = 12,797 251 191 395 300 грамма
+  const руслот2грамм = (n) => {
+    const res = n * 4095120375 / 32 / 10000000;
+    return res
+  };
+  const грамм2руслот = (n) => {
+    const res = n * 32 * 10000000 / 4095120375;
+    return res
+  };
+
+  // Золотник = 1/96 фунта = 4,26575417 грамма
+  const золотник2грамм = (n) => {
+    const res = n * 4095120375 / 96 / 10000000;
+    return res
+  };
+  const грамм2золотник = (n) => {
+    const res = n * 96 * 10000000 / 4095120375;
+    return res
+  };
+
+  // Доля = 1/96 золотника = 44,435 миллиграмма
+  const доля2грамм = (n) => {
+    const res = n * 4095120375 / 96 / 96 / 10000000;
+    return res
+  };
+  const грамм2доля = (n) => {
+    const res = n * 96 * 96 * 10000000 / 4095120375;
+    return res
+  };
+
+  // -----------------------------------------------------------------------------
+
+  // Европейские меры массы
+
+  // Аса — Германия, Голландия = 0,048063 г
+  // export const аса2грамм = (n: number): number => {
+  //   const res = n * 48063 * 1000000
+  //   return res
+  // }
+  // export const грамм2аса = (n: number): number => {
+  //   const res = n / 48063 / 1000000
+  //   return res
+  // }
+
+  const { random: randomDefault } = Math;
+  const random = () => randomDefault() || random();
+
+  const createRandomtring = () => 'r' + random().toString(32).slice(2);
+
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+
+  const fixFraction = (n) => {
+    const fraction = n.toString().split('.')[1];
+    if (fraction) {
+      const match = fraction.match(/[09]{2,}\d$/);
+      if (match) n = +n.toFixed(match.index + match[0].length - 1);
+    }
+    return n
+  };
+
+  let globalId = '';
+
+  const createInput = (
+    label, short, $value,
+    fromBase,
+    toBase
+  ) => {
+    let value = null;
+    const id = createRandomtring()
+    ;(
+        _ELEMENT("div", { class: "form-floating my-2" })(
+      _ELEMENT("input", { type: "number", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$([$value], (_$0) => ((globalId === id && value != null ? value : value = fixFraction(fromBase(_$0[0]))) || 0)) }, [_USE_LISTEN('input', (e) => {
+            globalId = id;
+            $value.set(toBase(value = +e.target.value || 0));
+          }), _USE_LISTEN('blur', (e) => {
+            if (globalId === id) {
+              globalId = '';
+              const cel = toBase(+e.target.value || 0);
+              e.target.value = value = fromBase(cel);
+              $value.set(cel);
+            }
+          })])(),
+      _ELEMENT("label", { for: id })(
+        _TEXT(label),
+        _ELEMENT("span", { class: "text-success fw-bold" })(
+          _TEXT(" "),
+          _TEXT(short)
         )
       )
+    )
 
-      );
-    };
+    );
+  };
 
-    /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
-    const $ГРАММ = ae(1);
+  const $ГРАММ = store(1);
 
-    const createTitle = (title) => {
-        Ve("h2")(
-        Fe(title)
-      );
+  const createTitle = (title) => {
+      _ELEMENT("h2")(
+      _TEXT(title)
+    );
 
-    };
+  };
 
-    function Weight(
-      
-    ) {
-      createInput(
-        'Миллиграмм', '(мг)', $ГРАММ, грамм2миллиграмм, миллиграмм2грамм
-      );
-      createInput(
-        'Карат — 0,2 г', '', $ГРАММ, грамм2карат, карат2грамм
-      );
-      createInput(
-        'Грамм', '(г)', $ГРАММ, (n) => n, (n) => n
-      );
-      createInput(
-        'Килограмм', '(кг)', $ГРАММ, грамм2килограмм, килограмм2грамм
-      );
-      createInput(
-        'Центнер', '(ц)', $ГРАММ, грамм2центнер, центнер2грамм
-      );
-      createInput(
-        'Тонна', '(т)', $ГРАММ, грамм2тонна, тонна2грамм
-      );
+  function Weight(
+    
+  ) {
+    createInput(
+      'Миллиграмм', '(мг)', $ГРАММ, грамм2миллиграмм, миллиграмм2грамм
+    );
+    createInput(
+      'Карат — 0,2 г', '', $ГРАММ, грамм2карат, карат2грамм
+    );
+    createInput(
+      'Грамм', '(г)', $ГРАММ, (n) => n, (n) => n
+    );
+    createInput(
+      'Килограмм', '(кг)', $ГРАММ, грамм2килограмм, килограмм2грамм
+    );
+    createInput(
+      'Центнер', '(ц)', $ГРАММ, грамм2центнер, центнер2грамм
+    );
+    createInput(
+      'Тонна', '(т)', $ГРАММ, грамм2тонна, тонна2грамм
+    );
 
-      createTitle('Американская система');
-      createInput(
-        'Гран — 1/7000 фунта, или 64,79891 мг', '', $ГРАММ, грамм2гран, гран2грамм
-      );
-      createInput(
-        'Драхма — 1/256 фунта, или 1,7718451953125 г', '', $ГРАММ, грамм2драхма, драхма2грамм
-      );
-      createInput(
-        'Унция — 1/16 фунта, или 28,349523125 г', '', $ГРАММ, грамм2унция, унция2грамм
-      );
-      createInput(
-        'Фунт — 453,59237 г (точное и официальное значение)', '', $ГРАММ, грамм2фунт, фунт2грамм
-      );
-      createInput(
-        'Стоун — 14 фунтов, или 6,35029318 кг', '', $ГРАММ, грамм2стоун, стоун2грамм
-      );
-      createInput(
-        'Короткий хандредвейт = 100 фунтов = 45,359237 кг', '', $ГРАММ, грамм2корхандредвейт, корхандредвейт2грамм
-      );
-      createInput(
-        'Короткая тонна = 2000 фунтов = 0,90718474 т', '', $ГРАММ, грамм2кортонна, кортонна2грамм
-      );
+    createTitle('Американская система');
+    createInput(
+      'Гран — 1/7000 фунта, или 64,79891 мг', '', $ГРАММ, грамм2гран, гран2грамм
+    );
+    createInput(
+      'Драхма — 1/256 фунта, или 1,7718451953125 г', '', $ГРАММ, грамм2драхма, драхма2грамм
+    );
+    createInput(
+      'Унция — 1/16 фунта, или 28,349523125 г', '', $ГРАММ, грамм2унция, унция2грамм
+    );
+    createInput(
+      'Фунт — 453,59237 г (точное и официальное значение)', '', $ГРАММ, грамм2фунт, фунт2грамм
+    );
+    createInput(
+      'Стоун — 14 фунтов, или 6,35029318 кг', '', $ГРАММ, грамм2стоун, стоун2грамм
+    );
+    createInput(
+      'Короткий хандредвейт = 100 фунтов = 45,359237 кг', '', $ГРАММ, грамм2корхандредвейт, корхандредвейт2грамм
+    );
+    createInput(
+      'Короткая тонна = 2000 фунтов = 0,90718474 т', '', $ГРАММ, грамм2кортонна, кортонна2грамм
+    );
 
-      createTitle('Британская аптечная система');
-      createInput(
-        'Гран = 1/20 скрупула, или 0,06479891 г', '', $ГРАММ, грамм2велгран, велгран2грамм
-      );
-      createInput(
-        'Скрупул = 1/288 тройского фунта, или 1,2959782 г', '', $ГРАММ, грамм2скрупул, скрупул2грамм
-      );
-      createInput(
-        'Драхма = 1/96 тройского фунта, или 3,8879346 г', '', $ГРАММ, грамм2велдрахма, велдрахма2грамм
-      );
-      createInput(
-        'Тройская унция = 1/12 тройского фунта, или 31,1034768 г', '', $ГРАММ, грамм2тройскаяунция, тройскаяунция2грамм
-      );
-      createInput(
-        'Тройский (аптечный) фунт = 373,2417216 г', '', $ГРАММ, грамм2тройскийфунт, тройскийфунт2грамм
-      );
+    createTitle('Британская аптечная система');
+    createInput(
+      'Гран = 1/20 скрупула, или 0,06479891 г', '', $ГРАММ, грамм2велгран, велгран2грамм
+    );
+    createInput(
+      'Скрупул = 1/288 тройского фунта, или 1,2959782 г', '', $ГРАММ, грамм2скрупул, скрупул2грамм
+    );
+    createInput(
+      'Драхма = 1/96 тройского фунта, или 3,8879346 г', '', $ГРАММ, грамм2велдрахма, велдрахма2грамм
+    );
+    createInput(
+      'Тройская унция = 1/12 тройского фунта, или 31,1034768 г', '', $ГРАММ, грамм2тройскаяунция, тройскаяунция2грамм
+    );
+    createInput(
+      'Тройский (аптечный) фунт = 373,2417216 г', '', $ГРАММ, грамм2тройскийфунт, тройскийфунт2грамм
+    );
 
-      createTitle('Русская система мер');
-      createInput(
-        'Доля = 1/96 золотника = 44,435 миллиграмма', '', $ГРАММ, грамм2доля, доля2грамм
-      );
-      createInput(
-        'Золотник = 3 лота = 4,26575417 грамма', '', $ГРАММ, грамм2золотник, золотник2грамм
-      );
-      createInput(
-        'Лот = 1/32 фунта', '', $ГРАММ, грамм2руслот, руслот2грамм
-      );
-      createInput(
-        'Фунт = 40 пудов', '', $ГРАММ, грамм2русфунт, русфунт2грамм
-      );
-      createInput(
-        'Пуд = 1/10 берковца = 1280 лотам = 16,3804815 кг', '', $ГРАММ, грамм2пуд, пуд2грамм
-      );
-      createInput(
-        'Берковец = 163,804815 кг', '', $ГРАММ, грамм2берковец, берковец2грамм
-      );
-    }
+    createTitle('Русская система мер');
+    createInput(
+      'Доля = 1/96 золотника = 44,435 миллиграмма', '', $ГРАММ, грамм2доля, доля2грамм
+    );
+    createInput(
+      'Золотник = 3 лота = 4,26575417 грамма', '', $ГРАММ, грамм2золотник, золотник2грамм
+    );
+    createInput(
+      'Лот = 1/32 фунта', '', $ГРАММ, грамм2руслот, руслот2грамм
+    );
+    createInput(
+      'Фунт = 40 пудов', '', $ГРАММ, грамм2русфунт, русфунт2грамм
+    );
+    createInput(
+      'Пуд = 1/10 берковца = 1280 лотам = 16,3804815 кг', '', $ГРАММ, грамм2пуд, пуд2грамм
+    );
+    createInput(
+      'Берковец = 163,804815 кг', '', $ГРАММ, грамм2берковец, берковец2грамм
+    );
+  }
 
-    // import {
-    //   convertGuk2Celsius as toCelsius,
-    //   convertCelsius2Guk as fromCelsius
-    // } from './utils/temperature'
+  // import {
+  //   convertGuk2Celsius as toCelsius,
+  //   convertCelsius2Guk as fromCelsius
+  // } from './utils/temperature'
 
-    // console.log(300, fromCelsius(300), toCelsius(fromCelsius(300)))
-    // console.log(290, fromCelsius(290), toCelsius(fromCelsius(290)))
-    // console.log(220, fromCelsius(220), toCelsius(fromCelsius(220)))
-    // console.log(110, fromCelsius(110), toCelsius(fromCelsius(110)))
-    // console.log(30, fromCelsius(30), toCelsius(fromCelsius(30)))
-    // console.log(0, fromCelsius(0), toCelsius(fromCelsius(0)))
-    // console.log(-40, fromCelsius(-40), toCelsius(fromCelsius(-40)))
-    // console.log(-50, fromCelsius(-50), toCelsius(fromCelsius(-50)))
-    // console.log(-60, fromCelsius(-60), toCelsius(fromCelsius(-60)))
-    // console.log(-273.15, fromCelsius(-273.15), toCelsius(fromCelsius(-273.15)))
+  // console.log(300, fromCelsius(300), toCelsius(fromCelsius(300)))
+  // console.log(290, fromCelsius(290), toCelsius(fromCelsius(290)))
+  // console.log(220, fromCelsius(220), toCelsius(fromCelsius(220)))
+  // console.log(110, fromCelsius(110), toCelsius(fromCelsius(110)))
+  // console.log(30, fromCelsius(30), toCelsius(fromCelsius(30)))
+  // console.log(0, fromCelsius(0), toCelsius(fromCelsius(0)))
+  // console.log(-40, fromCelsius(-40), toCelsius(fromCelsius(-40)))
+  // console.log(-50, fromCelsius(-50), toCelsius(fromCelsius(-50)))
+  // console.log(-60, fromCelsius(-60), toCelsius(fromCelsius(-60)))
+  // console.log(-273.15, fromCelsius(-273.15), toCelsius(fromCelsius(-273.15)))
 
-    /* eslint-disable @typescript-eslint/explicit-function-return-type */
-    // import { Temperature } from './Temperature.rease'
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  // import { Temperature } from './Temperature.rease'
 
-    // https://ru.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B8%D1%86%D1%8B_%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85_%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D0%BD
+  // https://ru.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B8%D1%86%D1%8B_%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85_%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D0%BD
 
-    function App(
-      
-    ) {
-      (
-          Ve("div", { class: "container" })(
-        Ke(Weight)([])
-      )
+  function App(
+    
+  ) {
+    (
+        _ELEMENT("div", { class: "container" })(
+      _COMPONENT(Weight)([])
+    )
 
-      );
-    }
+    );
+  }
 
-    /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
-    mr(App, { target: document.body });
+  createReaseApp(App, { target: document.body });
 
 })();
 </script>
