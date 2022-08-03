@@ -14,6 +14,9 @@ const bs = fs.readFileSync(path.resolve('static/bootstrap.min.css'), 'utf8')
 
 const production = !process.env.ROLLUP_WATCH
 
+import package_json from './package.json'
+const title = package_json.name.split('-').slice(2).join('-') || package_json.name
+
 // eslint-disable-next-line func-style
 // function serve() {
 //   let server
@@ -114,7 +117,7 @@ export default {
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#333333">
 
-  <title>Happy math</title>
+  <title>${title}</title>
 
   <style>
   ${bs}
