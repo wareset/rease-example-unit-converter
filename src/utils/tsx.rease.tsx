@@ -37,7 +37,7 @@ export const createInput = (
           if (globalId === id) {
             globalId = ''
             const cel = toBase(+e.target.value || 0)
-            e.target.value = value = fromBase(cel)
+            e.target.value = value = fixFraction(fromBase(cel))
             $value.set(cel)
           }
         }}
