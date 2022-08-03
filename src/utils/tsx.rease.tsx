@@ -7,7 +7,7 @@ const fixFraction = (n: number): number => {
   const fraction = n.toString().split('.')[1]
   if (fraction) {
     const match = fraction.match(/[09]{2,}\d$/)
-    if (match) n = +n.toFixed(match.index! + match[0].length - 1)
+    if (match) n = fixFraction(+n.toFixed(match.index! + match[0].length - 1))
   }
   return n
 }
