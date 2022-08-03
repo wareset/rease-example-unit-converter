@@ -46,7 +46,7 @@ export default {
     sourcemap: false,
     format   : 'iife',
     name     : 'app',
-    file     : 'app/unit-converter.html'
+    file     : `app/${title}.html`
   },
   plugins: [
     {
