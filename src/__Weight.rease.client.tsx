@@ -51,6 +51,7 @@ const createTitle = (title: string): void => {
 export function Weight(
   this: TypeReaseContext
 ): void {
+  createTitle('Международная система')
   createInput(
     'Миллиграмм', '(мг)', $ГРАММ, грамм2миллиграмм, миллиграмм2грамм
   )
