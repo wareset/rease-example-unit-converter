@@ -5,7 +5,7 @@ import {
   _$ as _$1,
   _ul as _ul21
 } from 'rease';
-import 'rease/jsx'
+
 import type { TypeReaseStore } from 'rease'
 
 import { createRandomtring } from '.'

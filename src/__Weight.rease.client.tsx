@@ -3,7 +3,7 @@ import {
   _t as _t3,
   _e as _e8
 } from 'rease';
-import 'rease/jsx'
+
 import type { TypeReaseContext } from 'rease'
 import { storeGlobal } from 'rease'
 

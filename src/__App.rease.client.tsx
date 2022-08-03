@@ -3,7 +3,7 @@ import {
   _c as _c7,
   _e as _e8
 } from 'rease';
-import 'rease/jsx'
+
 import type { TypeReaseContext } from 'rease'
 
 import { Weight } from './Weight.rease'
