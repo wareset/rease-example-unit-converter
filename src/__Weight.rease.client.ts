@@ -1,4 +1,11 @@
-import 'rease/jsx'
+/* eslint-disable */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import {
+  _t as _t3,
+  _e as _e8
+} from 'rease';
+
 import type { TypeReaseContext } from 'rease'
 import { subjectGlobal } from 'rease'
 
@@ -37,7 +44,10 @@ import { createInput } from './utils/tsx.rease'
 const $ГРАММ = subjectGlobal<number>(1)
 
 const createTitle = (title: string): void => {
-  <h2>{title}</h2>
+    _e8("h2")(
+    _t3(title)
+  )
+
 }
 
 export function Weight(

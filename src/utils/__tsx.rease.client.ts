@@ -1,4 +1,13 @@
-import 'rease/jsx'
+/* eslint-disable */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import {
+  _t as _t3,
+  _e as _e8,
+  _$ as _$1,
+  _ul as _ul20
+} from 'rease';
+
 import type { TypeReaseSubject } from 'rease'
 
 import { createRandomtring } from '.'
@@ -22,30 +31,26 @@ export const createInput = (
   let value: number | null = null
   const id = createRandomtring()
   ;(
-    <div class="form-floating my-2">
-      <input type="number"
-        id={id}
-        class="form-control"
-        style="padding-top:2rem;"
-        placeholder={1}
-        value={(globalId === id && value != null ? value : value = fixFraction(fromBase($value!!))) || 0}
-        r-on-input={(e: any) => {
+      _e8("div", { class: "form-floating my-2" })(
+    _e8("input", { type: "number", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => ((globalId === id && value != null ? value : value = fixFraction(fromBase(_$0[0]))) || 0)) }, [_ul20('input', (e: any) => {
           globalId = id
           $value.set(toBase(value = +e.target.value || 0))
-        }}
-        r-on-blur={(e: any) => {
+        }), _ul20('blur', (e: any) => {
           if (globalId === id) {
             globalId = ''
             const cel = toBase(+e.target.value || 0)
             e.target.value = value = fixFraction(fromBase(cel))
             $value.set(cel)
           }
-        }}
-      />
-      <label for={id}>
-        {label}
-        <span class="text-success fw-bold"> {short}</span>
-      </label>
-    </div>
+        })])(),
+    _e8("label", { for: id })(
+      _t3(label),
+      _e8("span", { class: "text-success fw-bold" })(
+        _t3(" "),
+        _t3(short)
+      )
+    )
+  )
+
   )
 }

@@ -1,15 +1,15 @@
 {
-  "name": "html-project-unit-converter",
+  "name": "rease-example-unit-converter",
   "version": "1.0.0",
   "description": "wip",
   "license": "MIT",
-  "homepage": "https://github.com/wareset/unit-converter#readme",
+  "homepage": "https://github.com/wareset/rease-example-unit-converter",
   "bugs": {
-    "url": "https://github.com/wareset/unit-converter/issues"
+    "url": "https://github.com/wareset/rease-example-unit-converter/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wareset/unit-converter.git"
+    "url": "git+https://github.com/wareset/rease-example-unit-converter.git"
   },
   "author": "rease <cftcview@gmail.com>",
   "scripts": {
@@ -24,9 +24,9 @@
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-sucrase": "^4.0.0",
-    "rease": "^0.1.0",
+    "rease": "^0.2.0",
     "rollup": "^2.78.0",
-    "rollup-plugin-rease": "^0.1.0",
+    "rollup-plugin-rease": "^0.2.0",
     "rollup-plugin-livereload": "^2.0.0",
     "terser": "^5.14.2",
     "typescript": "4.x"

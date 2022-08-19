@@ -1,6 +1,6 @@
 import 'rease/jsx'
 import type { TypeReaseContext } from 'rease'
-import { storeGlobal } from 'rease'
+import { subjectGlobal } from 'rease'
 
 import {
   фаренгейт2цельсий, цельсий2фаренгейт,
@@ -19,7 +19,7 @@ import {
 
 import { createInput } from './utils/tsx.rease'
 
-const $ЦЕЛЬСИЙ = storeGlobal<number>(33)
+const $ЦЕЛЬСИЙ = subjectGlobal<number>(33)
 
 export function Temperature(
   this: TypeReaseContext
