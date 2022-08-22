@@ -1,4 +1,7 @@
-import 'rease/jsx'
+/* eslint-disable */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import type { TypeReaseContext } from 'rease'
 import { subjectGlobal } from 'rease'
 

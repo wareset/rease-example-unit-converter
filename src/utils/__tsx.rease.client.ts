@@ -10,11 +10,18 @@ import {
 
 import type { TypeReaseSubject } from 'rease'
 
-import { createRandomtring } from '.'
+import Fraction from 'fraction.js'
+
+export const createTitle = (title: string): void => {
+    _e8("h2")(
+    _t3(title)
+  )
+
+}
 
 const fixFraction = (n: number): number => {
-  const fraction = n.toString().split('.')[1]
-  if (fraction) {
+  const fraction = n.toString().split('.')[1] || ''
+  if (fraction.length > 7) {
     const match = fraction.match(/[09]{2,}\d$/)
     if (match) n = fixFraction(+n.toFixed(match.index! + match[0].length - 1))
   }
@@ -23,27 +30,41 @@ const fixFraction = (n: number): number => {
 
 let globalId = ''
 
+import { num2obj } from './num2obj'
+const fraction2string = (f: Fraction): string => {
+  let frac = f.toString().split('.')[1] || ''
+  if (frac) frac = '.' + frac
+
+  const obj = num2obj(fixFraction(f.n / f.d))
+  frac = (obj.i || '0') + frac
+
+  if (f.s < 0) frac = '-' + frac
+  return frac
+}
+
 export const createInput = (
-  label: string, short: string, $value: TypeReaseSubject<number>,
-  fromBase: (n: number) => number,
-  toBase: (n: number) => number
+  label: string, short: string, $value: TypeReaseSubject<Fraction>,
+  fromBase: (n: Fraction) => Fraction,
+  toBase: (n: Fraction) => Fraction
 ): void => {
-  let value: number | null = null
-  const id = createRandomtring()
+  let value!: Fraction
+  let number!: number
+  const id = 'i' + (Number.EPSILON * 1e15 + Math.random()).toString(36).slice(2)
   ;(
       _e8("div", { class: "form-floating my-2" })(
-    _e8("input", { type: "number", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => ((globalId === id && value != null ? value : value = fixFraction(fromBase(_$0[0]))) || 0)) }, [_ul20('input', (e: any) => {
+    _e8("input", { type: "text", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => (value = fromBase(_$0[0]),
+          globalId === id ? number : fraction2string(value))) }, [_ul20('input', (e: any) => {
           globalId = id
-          $value.set(toBase(value = +e.target.value || 0))
+          $value.set(toBase(value = new Fraction(number = +e.target.value || 0)))
+        }), _ul20('focus', (e: any) => {
+          e.target.type = 'number'
+          e.target.value = +value
         }), _ul20('blur', (e: any) => {
-          if (globalId === id) {
-            globalId = ''
-            const cel = toBase(+e.target.value || 0)
-            e.target.value = value = fixFraction(fromBase(cel))
-            $value.set(cel)
-          }
+          globalId = ''
+          e.target.type = 'text'
+          e.target.value = fraction2string(value)
         })])(),
-    _e8("label", { for: id })(
+    _e8("label", { for: id, style: "font-size:0.9em" })(
       _t3(label),
       _e8("span", { class: "text-success fw-bold" })(
         _t3(" "),
