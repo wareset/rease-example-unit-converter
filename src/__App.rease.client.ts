@@ -2,8 +2,8 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {
-  _c as _c7,
-  _e as _e8
+  _c as _c8,
+  _e as _e9
 } from 'rease';
 
 import type { TypeReaseContext } from 'rease'
@@ -17,8 +17,8 @@ export function App(
   this: TypeReaseContext
 ): void {
   (
-      _e8("div", { class: "container" })(
-    _c7(Weight)([])
+      _e9("div", { class: "container" })(
+    _c8(Weight)([])
   )
 
   )

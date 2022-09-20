@@ -40,8 +40,10 @@ export const createInput = (
   const id = 'i' + (Number.EPSILON * 1e15 + Math.random()).toString(36).slice(2)
   ;(
     <div class="form-floating my-2">
-      <input type="text"
+      <input
         id={id}
+        type="text"
+        inputmode="text"
         class="form-control"
         style="padding-top:2rem;"
         placeholder={1}
@@ -54,12 +56,14 @@ export const createInput = (
           $value.set(toBase(value = new Fraction(number = +e.target.value || 0)))
         }}
         r-on-focus={(e: any) => {
-          e.target.type = 'number'
+          // e.target.type = 'number'
+          e.target.inputmode = 'number'
           e.target.value = +value
         }}
         r-on-blur={(e: any) => {
           globalId = ''
-          e.target.type = 'text'
+          // e.target.type = 'text'
+          e.target.inputmode = 'text'
           e.target.value = fraction2string(value)
         }}
       />

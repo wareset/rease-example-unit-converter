@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {
   _t as _t3,
-  _e as _e8,
+  _e as _e9,
   _$ as _$1,
-  _ul as _ul20
+  _ul as _ul21
 } from 'rease';
 
 import type { TypeReaseSubject } from 'rease'
@@ -13,7 +13,7 @@ import type { TypeReaseSubject } from 'rease'
 import Fraction from 'fraction.js'
 
 export const createTitle = (title: string): void => {
-    _e8("h2")(
+    _e9("h2")(
     _t3(title)
   )
 
@@ -51,22 +51,24 @@ export const createInput = (
   let number!: number
   const id = 'i' + (Number.EPSILON * 1e15 + Math.random()).toString(36).slice(2)
   ;(
-      _e8("div", { class: "form-floating my-2" })(
-    _e8("input", { type: "text", id: id, class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => (value = fromBase(_$0[0]),
-          globalId === id ? number : fraction2string(value))) }, [_ul20('input', (e: any) => {
+      _e9("div", { class: "form-floating my-2" })(
+    _e9("input", { id: id, type: "text", inputmode: "text", class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => (value = fromBase(_$0[0]),
+          globalId === id ? number : fraction2string(value))) }, [_ul21('input', (e: any) => {
           globalId = id
           $value.set(toBase(value = new Fraction(number = +e.target.value || 0)))
-        }), _ul20('focus', (e: any) => {
-          e.target.type = 'number'
+        }), _ul21('focus', (e: any) => {
+          // e.target.type = 'number'
+          e.target.inputmode = 'number'
           e.target.value = +value
-        }), _ul20('blur', (e: any) => {
+        }), _ul21('blur', (e: any) => {
           globalId = ''
-          e.target.type = 'text'
+          // e.target.type = 'text'
+          e.target.inputmode = 'text'
           e.target.value = fraction2string(value)
         })])(),
-    _e8("label", { for: id, style: "font-size:0.9em" })(
+    _e9("label", { for: id, style: "font-size:0.9em" })(
       _t3(label),
-      _e8("span", { class: "text-success fw-bold" })(
+      _e9("span", { class: "text-success fw-bold" })(
         _t3(" "),
         _t3(short)
       )
