@@ -1,6 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 
 import type { TypeReaseContext } from 'rease'
 import { subjectGlobal } from 'rease'
