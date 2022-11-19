@@ -1,21 +1,23 @@
-const repeat = (string: string, count?: number): string => {
+function repeat(string: string, count?: number): string {
   let res = ''
   count = -~count! || 0
   while (--count > 0) res += string
   return res
 }
 
-const padStart = (string: string, len: number, pad?: string): string =>
-  !((len = (len || 0) - string.length) > 0)
+function padStart(string: string, len: number, pad?: string): string {
+  return !((len = (len || 0) - string.length) > 0)
     ? string
     : repeat(pad = pad || ' ', len / pad.length + 1).slice(0, len) + string
+}
 
-const padEnd = (string: string, len: number, pad?: string): string =>
-  !((len = (len || 0) - string.length) > 0)
+function padEnd(string: string, len: number, pad?: string): string {
+  return !((len = (len || 0) - string.length) > 0)
     ? string
     : string + repeat(pad = pad || ' ', len / pad.length + 1).slice(0, len)
+}
 
-export const num2obj = (n: number | string): any => {
+export function num2obj(n: number | string): any {
   const some = ('' + n)
     .replace(/[\s_]+/g, '')
     .match(

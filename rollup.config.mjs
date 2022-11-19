@@ -1,11 +1,12 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
+import { minify as terser } from 'terser'
+import { transform as sucrase } from 'sucrase'
+import { transformAsync as babel } from '@babel/core'
+
 import rease from 'rollup-plugin-rease'
-import babel from '@rollup/plugin-babel'
 // import css from 'rollup-plugin-css-only'
-import sucrase from '@rollup/plugin-sucrase'
-import { terser } from 'rollup-plugin-terser'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 // import livereload from 'rollup-plugin-livereload'
@@ -13,9 +14,6 @@ import resolve from '@rollup/plugin-node-resolve'
 const bs = fs.readFileSync(path.resolve('static/bootstrap.min.css'), 'utf8')
 
 const production = !process.env.ROLLUP_WATCH
-
-import package_json from './package.json'
-const title = package_json.name.split('-').slice(2).join('-') || package_json.name
 
 // eslint-disable-next-line func-style
 // function serve() {
@@ -46,7 +44,7 @@ export default {
     sourcemap: false,
     format   : 'iife',
     name     : 'app',
-    file     : `app/${title}.html`
+    file     : 'app/unit-converter.html'
   },
   plugins: [
     {
@@ -59,22 +57,25 @@ export default {
       }
     },
     rease({ env: 'client', debug: true }),
-
-    // we'll extract any component CSS out into
-    // a separate file - better for performance
-    // css({ output: 'bundle.css' }),
-
-    // If you have external dependencies installed from
-    // npm, you'll most likely need these plugins. In
-    // some cases you'll need additional configuration -
-    // consult the documentation for details:
-    // https://github.com/rollup/plugins/tree/master/packages/commonjs
+    {
+      name: 'sucrase-custom',
+      transform(code, id) {
+        if (/\.[mc]?tsx?$/.test(id)) {
+          try {
+            code = sucrase(code, { transforms: ['typescript'] }).code
+          } catch (e) {
+            console.error('sucrase-custom')
+            console.error(e)
+          }
+          return { code }
+        }
+        return null
+      }
+    },
     resolve({
       browser   : true,
-      dedupe    : ['svelte', 'rease'],
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json']
     }),
-    sucrase({ exclude: ['node_modules/**'], transforms: ['typescript'] }),
     commonjs(),
 
     // In dev mode, call `npm run start` once
@@ -85,29 +86,50 @@ export default {
     // browser on changes when not in production
     // !production && livereload('app'),
 
-    production && babel({
-      babelHelpers: 'bundled',
-      // babelrc: false,
-      presets     : [
-        [
-          '@babel/preset-env',
-          {
-            corejs     : 3,
-            loose      : true,
-            bugfixes   : true,
-            modules    : false,
-            useBuiltIns: 'entry', // 'entry', 'usage'
-            targets    : '> 1%, not dead'
-          }
-        ]
-      ]
-    }),
-
-    // If we're building for production (npm run build
-    // instead of npm run dev), minify
-    production && terser(),
     {
-      renderChunk(code) {
+      async transform(code) {
+        if (production) {
+          try {
+            code = (await babel(code, {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    corejs     : 3,
+                    loose      : true,
+                    bugfixes   : true,
+                    modules    : false,
+                    useBuiltIns: 'entry', // 'entry', 'usage'
+                    targets    : '> 1%, not dead, ie 11',
+                  }
+                ]
+              ],
+              plugins: ['@babel/plugin-transform-runtime']
+            })).code
+          } catch (e) {
+            console.error('babel-custom')
+            console.error(e)
+          }
+        }
+        return { code }
+      },
+      async renderChunk(code) {
+        if (production) {
+          try {
+            code = (await terser(code, {
+              safari10       : true,
+              mangle         : true,
+              module         : true,
+              toplevel       : true,
+              compress       : true,
+              keep_classnames: false
+            })).code
+          } catch (e) {
+            console.error('terser-custom')
+            console.error(e)
+          }
+        }
+
         // return '/* eslint-disable */\n' + code
         return `<!DOCTYPE html>
 <html lang="en">
@@ -117,7 +139,7 @@ export default {
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#333333">
 
-  <title>${title}</title>
+  <title>unit-converter</title>
 
   <style>
   ${bs}

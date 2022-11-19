@@ -3,11 +3,11 @@ import type { TypeReaseSubject } from 'rease'
 
 import Fraction from 'fraction.js'
 
-export const createTitle = (title: string): void => {
+export function createTitle(title: string): void {
   <h2>{title}</h2>
 }
 
-const fixFraction = (n: number): number => {
+function fixFraction(n: number): number {
   const fraction = n.toString().split('.')[1] || ''
   if (fraction.length > 7) {
     const match = fraction.match(/[09]{2,}\d$/)
@@ -19,7 +19,7 @@ const fixFraction = (n: number): number => {
 let globalId = ''
 
 import { num2obj } from './num2obj'
-const fraction2string = (f: Fraction): string => {
+function fraction2string(f: Fraction): string {
   let frac = f.toString().split('.')[1] || ''
   if (frac) frac = '.' + frac
 
@@ -30,11 +30,11 @@ const fraction2string = (f: Fraction): string => {
   return frac
 }
 
-export const createInput = (
+export function createInput(
   label: string, short: string, $value: TypeReaseSubject<Fraction>,
   fromBase: (n: Fraction) => Fraction,
   toBase: (n: Fraction) => Fraction
-): void => {
+): void {
   let value!: Fraction
   let number!: number
   const id = 'i' + (Number.EPSILON * 1e15 + Math.random()).toString(36).slice(2)
@@ -51,16 +51,16 @@ export const createInput = (
           value = fromBase($value!!),
           globalId === id ? number : fraction2string(value)
         )}
-        r-on-input={(e: any) => {
+        r-on-input={function(e: any) {
           globalId = id
           $value.set(toBase(value = new Fraction(number = +e.target.value || 0)))
         }}
-        r-on-focus={(e: any) => {
+        r-on-focus={function(e: any) {
           // e.target.type = 'number'
           e.target.inputmode = 'number'
           e.target.value = +value
         }}
-        r-on-blur={(e: any) => {
+        r-on-blur={function(e: any) {
           globalId = ''
           // e.target.type = 'text'
           e.target.inputmode = 'text'

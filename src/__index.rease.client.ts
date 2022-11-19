@@ -1,8 +1,13 @@
 /* eslint-disable */
 // @ts-nocheck
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import {
+  _C as _C8
+} from 'rease';
 import { createReaseApp } from 'rease'
 
 import { App } from './App.rease'
 
-createReaseApp(App, { target: document.body })
+createReaseApp(document.body, function(App) {   _C8(App)([])
+ }, [App])

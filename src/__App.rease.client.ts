@@ -3,8 +3,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
-  _c as _c8,
-  _e as _e10
+  _C as _C8,
+  _E as _E10
 } from 'rease';
 
 import type { TypeReaseContext } from 'rease'
@@ -18,8 +18,8 @@ export function App(
   this: TypeReaseContext
 ): void {
   (
-      _e10("div", { class: "container" })(
-    _c8(Weight)([])
+      _E10("div", { class: "container" })(
+    _C8(Weight)([])
   )
 
   )
