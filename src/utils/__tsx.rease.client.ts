@@ -3,10 +3,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
+  _x as _x2,
   _t as _t3,
-  _E as _E10,
+  _E as _E9,
   _$ as _$1,
-  _l as _l22
+  _l as _l21
 } from 'rease';
 
 import type { TypeReaseSubject } from 'rease'
@@ -14,8 +15,8 @@ import type { TypeReaseSubject } from 'rease'
 import Fraction from 'fraction.js'
 
 export function createTitle(title: string): void {
-    _E10("h2")(
-    _t3(title)
+    _E9("h2")(
+    _x2(title)
   )
 
 }
@@ -52,26 +53,26 @@ export function createInput(
   let number!: number
   const id = 'i' + (Number.EPSILON * 1e15 + Math.random()).toString(36).slice(2)
   ;(
-      _E10("div", { class: "form-floating my-2" })(
-    _E10("input", { id: id, type: "text", inputmode: "text", class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => (value = fromBase(_$0[0]),
-          globalId === id ? number : fraction2string(value))) }, [_l22('input', function(e: any) {
+      _E9("div", { class: "form-floating my-2" })(
+    _E9("input", { id: id, type: "text", inputmode: "text", class: "form-control", style: "padding-top:2rem;", placeholder: 1, value: /*r2.$*/_$1([$value], (_$0) => (value = fromBase(_$0[0]),
+          globalId === id ? number : fraction2string(value))) }, [_l21('input', function(e: any) {
           globalId = id
           $value.set(toBase(value = new Fraction(number = +e.target.value || 0)))
-        }), _l22('focus', function(e: any) {
+        }), _l21('focus', function(e: any) {
           // e.target.type = 'number'
           e.target.inputmode = 'number'
           e.target.value = +value
-        }), _l22('blur', function(e: any) {
+        }), _l21('blur', function(e: any) {
           globalId = ''
           // e.target.type = 'text'
           e.target.inputmode = 'text'
           e.target.value = fraction2string(value)
         })])(),
-    _E10("label", { for: id, style: "font-size:0.9em" })(
-      _t3(label),
-      _E10("span", { class: "text-success fw-bold" })(
+    _E9("label", { for: id, style: "font-size:0.9em" })(
+      _x2(label),
+      _E9("span", { class: "text-success fw-bold" })(
         _t3(" "),
-        _t3(short)
+        _x2(short)
       )
     )
   )
