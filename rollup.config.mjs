@@ -5,11 +5,13 @@ import { minify as terser } from 'terser'
 import { transform as sucrase } from 'sucrase'
 import { transformAsync as babel } from '@babel/core'
 
-import rease from 'rollup-plugin-rease'
 // import css from 'rollup-plugin-css-only'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-// import livereload from 'rollup-plugin-livereload'
+import rollupLivereload from 'rollup-plugin-livereload'
+
+import { jsx as rease_jsx } from 'rastree'
+// import { css as rease_css} from 'rastree'
 
 const bs = fs.readFileSync(path.resolve('static/bootstrap.min.css'), 'utf8')
 
@@ -39,7 +41,7 @@ const production = !process.env.ROLLUP_WATCH
 // }
 
 export default {
-  input : 'src/index.rease.tsx',
+  input : 'src/index.tsx',
   output: {
     sourcemap: false,
     format   : 'iife',
@@ -48,6 +50,7 @@ export default {
   },
   plugins: [
     {
+      name: 'svg-custom',
       transform(code, id) {
         // if (id in temp) return temp[id]
         if (id.endsWith('.svg')) {
@@ -56,7 +59,18 @@ export default {
         return null
       }
     },
-    rease({ env: 'client', debug: true }),
+    {
+      name: 'rease-custom',
+      transform(code, id) {
+        if (/\.[tj]sx?$/.test(id)) {
+          const useJSX = /x$/.test(id)
+          code = rease_jsx(code, { useJSX })
+          // code = rease_css(code, { useJSX, salt: id })
+          return code
+        }
+        return null
+      }
+    },
     {
       name: 'sucrase-custom',
       transform(code, id) {
@@ -84,7 +98,7 @@ export default {
 
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
-    // !production && livereload('app'),
+    !production && rollupLivereload('app'),
 
     {
       async transform(code) {
@@ -154,7 +168,7 @@ ${code}
 </body>
 
 </html>
-        `
+`
       }
     }
   ],
